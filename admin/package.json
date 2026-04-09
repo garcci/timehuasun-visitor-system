@@ -1,6 +1,7 @@
 {
-  "name": "visitor-admin",
+  "name": "timehuasun-visitor-admin",
   "version": "1.0.0",
+  "description": "时代华鑫访客管理系统管理后台 - Vue3 + Element Plus",
   "engines": {
     "node": ">=16.0.0"
   },

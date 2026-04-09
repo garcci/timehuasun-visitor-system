@@ -1,7 +1,7 @@
 {
-  "name": "visitor-system-backend",
+  "name": "timehuasun-visitor-backend",
   "version": "1.0.0",
-  "description": "访客系统后端服务",
+  "description": "时代华鑫访客管理系统后端服务 - Node.js + Express + MySQL",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -9,10 +9,13 @@
   },
   "keywords": [
     "visitor",
+    "management",
     "express",
-    "mongodb"
+    "mysql",
+    "oa-integration",
+    "timehuasun"
   ],
-  "author": "",
+  "author": "TimeHuasun",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.14.0",

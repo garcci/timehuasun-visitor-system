@@ -1,12 +1,12 @@
 {
-  "name": "miniprogram-ts-quickstart",
+  "name": "timehuasun-visitor-system",
   "version": "1.0.0",
-  "description": "",
+  "description": "时代华鑫访客管理系统 - 微信小程序访客预约审批平台",
   "scripts": {
   },
-  "keywords": [],
-  "author": "",
-  "license": "",
+  "keywords": ["visitor", "management", "wechat-miniprogram", "oa-integration", "timehuasun"],
+  "author": "TimeHuasun",
+  "license": "MIT",
   "dependencies": {
     "weapp-qrcode": "^1.0.4"
   },
