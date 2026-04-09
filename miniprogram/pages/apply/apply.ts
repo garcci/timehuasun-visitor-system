@@ -61,6 +61,9 @@ Component({
     idCardHistory: [] as string[], // 历史身份证
     showPhonePicker: false, // 是否显示手机号选择器
     showIdCardPicker: false, // 是否显示身份证选择器
+    // 常用被访人
+    frequentHosts: [] as Array<{name: string, phone: string, loginName: string}>,
+    showFrequentHosts: false, // 是否显示常用被访人
   },
   pageLifetimes: {
     show() {
@@ -153,6 +156,8 @@ Component({
       
       // 加载历史输入记录
       this.loadHistory()
+      // 加载常用被访人
+      this.loadFrequentHosts()
     },
   },
   methods: {
@@ -176,6 +181,72 @@ Component({
       } catch (e) {
         console.error('加载历史记录失败:', e)
       }
+    },
+    
+    // 加载常用被访人
+    loadFrequentHosts() {
+      try {
+        const hosts = wx.getStorageSync('frequent_hosts') || []
+        console.log('👥 加载常用被访人:', hosts)
+        this.setData({
+          frequentHosts: hosts.slice(0, 5) // 最多显示5个
+        })
+      } catch (e) {
+        console.error('加载常用被访人失败:', e)
+      }
+    },
+    
+    // 保存常用被访人
+    saveFrequentHost(name: string, phone: string, loginName: string) {
+      if (!name || !phone) return
+      
+      try {
+        let hosts = wx.getStorageSync('frequent_hosts') || []
+        
+        // 移除重复项（根据手机号判断）
+        hosts = hosts.filter((h: any) => h.phone !== phone)
+        
+        // 添加到开头
+        hosts.unshift({ name, phone, loginName })
+        
+        // 只保留最近10个
+        hosts = hosts.slice(0, 10)
+        
+        wx.setStorageSync('frequent_hosts', hosts)
+        console.log('💾 保存常用被访人:', hosts)
+      } catch (e) {
+        console.error('保存常用被访人失败:', e)
+      }
+    },
+    
+    // 显示/隐藏常用被访人
+    toggleFrequentHosts() {
+      this.setData({
+        showFrequentHosts: !this.data.showFrequentHosts,
+        // 隐藏其他选择器
+        showPhonePicker: false,
+        showIdCardPicker: false
+      })
+    },
+    
+    // 选择常用被访人
+    selectFrequentHost(e: any) {
+      const { name, phone, loginname } = e.currentTarget.dataset
+      console.log('✅ 选择常用被访人:', { name, phone, loginname })
+      
+      this.setData({
+        'form.hostName': name,
+        'form.hostPhone': phone,
+        'form.hostLoginName': loginname || '',
+        hostValidateSuccess: true,
+        showFrequentHosts: false,
+        // 清除可能的错误提示
+        'errors.hostName': '',
+        'errors.hostPhone': ''
+      })
+      
+      // 自动保存草稿
+      this.autoSaveDraft()
     },
     
     // 保存历史输入
@@ -263,9 +334,38 @@ Component({
     
     onInput(e: any) {
       const field = e.currentTarget.dataset.field as string
-      this.setData({ [`form.${field}`]: e.detail.value as string })
+      const value = e.detail.value as string
+      this.setData({ [`form.${field}`]: value })
+      // 实时验证该字段
+      this.validateField(field, value)
       // 自动保存草稿
       this.autoSaveDraft()
+    },
+    // 单个字段实时验证
+    validateField(field: string, value: string) {
+      const errors = { ...this.data.errors }
+      
+      switch (field) {
+        case 'name':
+          if (value.trim() && value.trim().length < 2) {
+            errors.name = '姓名至少需要2个字符'
+          } else {
+            delete errors.name
+          }
+          break
+        case 'organization':
+          if (value.trim()) {
+            delete errors.organization
+          }
+          break
+        case 'purpose':
+          if (value.trim()) {
+            delete errors.purpose
+          }
+          break
+      }
+      
+      this.setData({ errors })
     },
     /**
      * 身份证号输入时实时验证（只在输入完整时才验证）
@@ -763,6 +863,9 @@ Component({
         this.saveToHistory('phone', f.phone.trim())
         this.saveToHistory('idcard', f.idCard.trim())
         console.log('✅ 已保存历史记录:', { phone: f.phone.trim(), idCard: f.idCard.trim() })
+        
+        // ✅ 提交成功后保存常用被访人
+        this.saveFrequentHost(f.hostName.trim(), f.hostPhone.trim(), f.hostLoginName.trim())
         
         // 提交成功后清除草稿
         wx.removeStorageSync('visitor_draft')

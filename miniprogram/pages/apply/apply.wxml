@@ -151,6 +151,29 @@
       </view>
       <view class="divider"></view>
 
+      <!-- 常用被访人 -->
+      <view wx:if="{{frequentHosts.length > 0}}" class="frequent-hosts-section">
+        <view class="frequent-hosts-header" bindtap="toggleFrequentHosts">
+          <text class="frequent-hosts-title">👥 常用被访人</text>
+          <text class="frequent-hosts-toggle">{{showFrequentHosts ? '收起' : '展开'}} ›</text>
+        </view>
+        <view wx:if="{{showFrequentHosts}}" class="frequent-hosts-list">
+          <view wx:for="{{frequentHosts}}" wx:key="phone"
+                class="frequent-host-item"
+                data-name="{{item.name}}"
+                data-phone="{{item.phone}}"
+                data-loginname="{{item.loginName}}"
+                bindtap="selectFrequentHost">
+            <view class="frequent-host-avatar">{{item.name.charAt(0)}}</view>
+            <view class="frequent-host-info">
+              <text class="frequent-host-name">{{item.name}}</text>
+              <text class="frequent-host-phone">{{item.phone}}</text>
+            </view>
+            <text class="frequent-host-select">选择</text>
+          </view>
+        </view>
+      </view>
+
       <view class="field">
         <text class="field-lbl">被访人联系电话 <text class="req">*</text></text>
         <view class="input-with-icon">

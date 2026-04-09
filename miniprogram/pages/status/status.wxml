@@ -13,6 +13,22 @@
       <text wx:if="{{app.status === 'rejected' && app.rejectReason}}" class="status-reason">
         拒绝原因：{{app.rejectReason}}
       </text>
+      <!-- 倒计时显示 -->
+      <text wx:if="{{app.status === 'approved' && countdown}}" class="countdown-text">
+        <text wx:if="{{countdown === '已过期'}}">来访时间已过期</text>
+        <text wx:else>距离来访还有 {{countdown}}</text>
+      </text>
+    </view>
+
+    <!-- 审批流程时间线 -->
+    <view class="timeline-card" wx:if="{{app.status !== 'rejected'}}">
+      <view class="timeline">
+        <view wx:for="{{statusFlow}}" wx:key="status" 
+              class="timeline-item {{index <= currentStep ? 'active' : ''}} {{index === currentStep ? 'current' : ''}}">
+          <view class="timeline-dot">{{item.icon}}</view>
+          <text class="timeline-label">{{item.label}}</text>
+        </view>
+      </view>
     </view>
 
     <!-- 凭证卡片（仅审批通过时显示） -->

@@ -47,6 +47,95 @@ page {
   color: #1f2937;
 }
 
+/* 常用被访人 */
+.frequent-hosts-section {
+  margin-bottom: 32rpx;
+  background: #f8fafc;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  border: 1rpx solid #e2e8f0;
+}
+
+.frequent-hosts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.frequent-hosts-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.frequent-hosts-toggle {
+  font-size: 24rpx;
+  color: #3b82f6;
+}
+
+.frequent-hosts-list {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.frequent-host-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 12rpx;
+  border: 1rpx solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.frequent-host-item:active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.frequent-host-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.frequent-host-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.frequent-host-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.frequent-host-phone {
+  font-size: 24rpx;
+  color: #6b7280;
+}
+
+.frequent-host-select {
+  font-size: 26rpx;
+  color: #3b82f6;
+  font-weight: 500;
+  padding: 8rpx 20rpx;
+  background: #eff6ff;
+  border-radius: 24rpx;
+}
+
 /* 分割线 */
 .divider {
   height: 2rpx;

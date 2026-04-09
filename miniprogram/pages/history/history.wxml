@@ -2,6 +2,54 @@
 <scroll-view class="scroll" scroll-y>
   <view class="page">
 
+    <!-- 筛选栏 -->
+    <view class="filter-bar">
+      <view class="filter-btn {{showFilterPanel ? 'active' : ''}}" bindtap="toggleFilterPanel">
+        <text class="filter-icon">🔍</text>
+        <text>筛选</text>
+        <text wx:if="{{currentStatus || currentTimeFilter}}" class="filter-badge">●</text>
+      </view>
+      <view wx:if="{{currentStatus || currentTimeFilter}}" class="filter-summary">
+        <text wx:for="{{filterOptions}}" wx:key="value" wx:if="{{item.value === currentStatus}}">{{item.label}}</text>
+        <text wx:for="{{timeFilterOptions}}" wx:key="value" wx:if="{{item.value === currentTimeFilter}}">{{item.label}}</text>
+      </view>
+    </view>
+
+    <!-- 筛选面板 -->
+    <view wx:if="{{showFilterPanel}}" class="filter-panel">
+      <!-- 状态筛选 -->
+      <view class="filter-section">
+        <text class="filter-title">申请状态</text>
+        <view class="filter-options">
+          <view wx:for="{{filterOptions}}" wx:key="value"
+                class="filter-option {{currentStatus === item.value ? 'active' : ''}}"
+                data-value="{{item.value}}"
+                bindtap="onStatusChange">
+            {{item.label}}
+          </view>
+        </view>
+      </view>
+      
+      <!-- 时间筛选 -->
+      <view class="filter-section">
+        <text class="filter-title">提交时间</text>
+        <view class="filter-options">
+          <view wx:for="{{timeFilterOptions}}" wx:key="value"
+                class="filter-option {{currentTimeFilter === item.value ? 'active' : ''}}"
+                data-value="{{item.value}}"
+                bindtap="onTimeFilterChange">
+            {{item.label}}
+          </view>
+        </view>
+      </view>
+      
+      <!-- 操作按钮 -->
+      <view class="filter-actions">
+        <view class="filter-reset" bindtap="resetFilters">重置</view>
+        <view class="filter-confirm" bindtap="toggleFilterPanel">确定</view>
+      </view>
+    </view>
+
     <!-- 空状态组件 -->
     <empty-state 
       show="{{list.length === 0}}"
