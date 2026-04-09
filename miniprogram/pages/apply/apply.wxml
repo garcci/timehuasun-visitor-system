@@ -84,35 +84,12 @@
       <view class="card-hdr">
         <view class="icon-badge green"></view>
         <text class="card-ttl">随行人员（可选）</text>
+        <text class="companion-count" wx:if="{{companions.length > 0}}">已添加 {{companions.length}} 人</text>
       </view>
       <view class="divider"></view>
 
-      <!-- 添加新随行人员 -->
-      <view class="field">
-        <text class="field-lbl">随行人员姓名</text>
-        <input class="field-inp" placeholder="请输入随行人员姓名" placeholder-class="inp-ph"
-          value="{{newCompanion.name}}" data-field="name" bindinput="onCompanionInput" />
-      </view>
-
-      <view class="field">
-        <text class="field-lbl">身份证号码</text>
-        <input class="field-inp" type="idcard" placeholder="请输入身份证号码" placeholder-class="inp-ph"
-          value="{{newCompanion.idCard}}" data-field="idCard" bindinput="onCompanionInput" />
-      </view>
-
-      <view class="field">
-        <text class="field-lbl">联系电话</text>
-        <input class="field-inp" type="number" placeholder="请输入联系电话（选填）" placeholder-class="inp-ph"
-          value="{{newCompanion.phone}}" data-field="phone" bindinput="onCompanionInput" maxlength="11" />
-      </view>
-
-      <view class="field">
-        <button class="add-companion-btn" bindtap="addCompanion">添 加</button>
-      </view>
-
       <!-- 已添加的随行人员列表 -->
       <view wx:if="{{companions.length > 0}}" class="companions-list">
-        <view class="list-title">已添加的随行人员（{{companions.length}}人）</view>
         <view wx:for="{{companions}}" wx:key="index" class="companion-item">
           <view class="companion-header">
             <text class="companion-name">{{item.name}}</text>
@@ -122,6 +99,46 @@
           </view>
           <text wx:if="{{item.phone}}" class="companion-phone">📞 {{item.phone}}</text>
           <text class="companion-idcard">{{item.idCard}}</text>
+        </view>
+      </view>
+
+      <!-- 添加新随行人员 -->
+      <view class="companion-add-section">
+        <view class="section-title">
+          <text class="title-icon">+</text>
+          <text>添加随行人员</text>
+        </view>
+        
+        <view class="field">
+          <text class="field-lbl">姓名 <text class="req">*</text></text>
+          <input class="field-inp" placeholder="请输入随行人员姓名" placeholder-class="inp-ph"
+            value="{{newCompanion.name}}" data-field="name" bindinput="onCompanionInput" />
+        </view>
+
+        <view class="field">
+          <text class="field-lbl">身份证号 <text class="req">*</text></text>
+          <input class="field-inp" type="idcard" placeholder="请输入身份证号码" placeholder-class="inp-ph"
+            value="{{newCompanion.idCard}}" data-field="idCard" bindinput="onCompanionInput" />
+        </view>
+
+        <view class="field">
+          <text class="field-lbl">联系电话</text>
+          <input class="field-inp" type="number" placeholder="请输入联系电话（选填）" placeholder-class="inp-ph"
+            value="{{newCompanion.phone}}" data-field="phone" bindinput="onCompanionInput" maxlength="11" />
+        </view>
+
+        <view class="field">
+          <button class="add-companion-btn {{!newCompanion.name || !newCompanion.idCard ? 'disabled' : ''}}" 
+            bindtap="addCompanion" 
+            disabled="{{!newCompanion.name || !newCompanion.idCard}}">
+            <text wx:if="{{newCompanion.name && newCompanion.idCard}}">✓ 确认添加此人</text>
+            <text wx:else>请填写姓名和身份证号</text>
+          </button>
+        </view>
+        
+        <view class="companion-tip">
+          <text class="tip-icon">💡</text>
+          <text class="tip-text">填写信息后点击上方按钮添加，可添加多人</text>
         </view>
       </view>
     </view>

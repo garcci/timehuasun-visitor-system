@@ -248,7 +248,7 @@ exports.submitApplication = async (req, res) => {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const submitTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     
-    // 插入主表数据
+    // 插入主表数据 - 确保所有参数都有默认值，避免 undefined
     await query(`
       INSERT INTO visitor_applications (
         id, openid, name, phone, id_type, id_card, organization, plate_number,
@@ -261,15 +261,15 @@ exports.submitApplication = async (req, res) => {
       applicationData.name,
       applicationData.phone,
       applicationData.idType || '居民身份证',
-      applicationData.idCard,
+      applicationData.idCard || '',
       applicationData.organization || '',
       applicationData.plateNumber || '',
       applicationData.hostName,
       applicationData.hostPhone,
       applicationData.visitDate,
-      applicationData.visitTime,
-      applicationData.endDate,
-      applicationData.endTime,
+      applicationData.visitTime || null,
+      applicationData.endDate || null,
+      applicationData.endTime || null,
       applicationData.purpose,
       applicationData.remark || '',
       'pending',

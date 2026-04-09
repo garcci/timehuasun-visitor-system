@@ -95,7 +95,7 @@ async function autoCreateDatabaseAndTables() {
         oa_flow_id VARCHAR(100) COMMENT 'OA 审批单号',
         qr_code TEXT COMMENT '访客二维码',
         companions JSON COMMENT '随行人员信息',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+        submit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '提交时间',
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
         INDEX idx_phone (phone),
         INDEX idx_status (status),

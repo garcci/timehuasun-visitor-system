@@ -317,14 +317,54 @@ page {
 .submit-btn::after { border: none; }
 
 /* 随行人员样式 */
+.companion-count {
+  margin-left: auto;
+  font-size: 26rpx;
+  color: #10b981;
+  font-weight: 500;
+  background: #d1fae5;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.companion-add-section {
+  background: #f8fafc;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-top: 20rpx;
+  border: 2rpx dashed #cbd5e1;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20rpx;
+}
+
+.title-icon {
+  width: 40rpx;
+  height: 40rpx;
+  background: #10b981;
+  color: white;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
 .add-companion-btn {
   width: 100%;
-  height: 92rpx;
+  height: 88rpx;
   background: #10b981;
   color: white;
   font-size: 30rpx;
   font-weight: 500;
-  border-radius: 18rpx;
+  border-radius: 16rpx;
   border: none;
   display: flex;
   align-items: center;
@@ -332,23 +372,39 @@ page {
   transition: all 0.2s ease;
 }
 
-.add-companion-btn:active {
+.add-companion-btn.disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+}
+
+.add-companion-btn:not(.disabled):active {
   background: #0da271;
 }
 
 .add-companion-btn::after { border: none; }
 
-.companions-list {
-  margin-top: 24rpx;
+.companion-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16rpx;
+  padding: 12rpx;
+  background: #e0f2fe;
+  border-radius: 12rpx;
 }
 
-.list-title {
+.tip-icon {
   font-size: 28rpx;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 16rpx;
-  padding-left: 12rpx;
-  border-left: 4rpx solid #10b981;
+  margin-right: 8rpx;
+}
+
+.tip-text {
+  font-size: 26rpx;
+  color: #0369a1;
+}
+
+.companions-list {
+  margin-bottom: 20rpx;
 }
 
 .companion-item {

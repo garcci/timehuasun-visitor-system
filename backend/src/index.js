@@ -106,12 +106,60 @@ app.use((req, res) => {
 
 // 错误处理（使用 Winston 日志）
 app.use((err, req, res, next) => {
-  logger.error('Server Error', err, {
+  // 错误分类处理
+  const errorCode = err.code || 'INTERNAL_ERROR';
+  let statusCode = 500;
+  let message = '服务器内部错误';
+  
+  // 根据错误类型返回不同状态码
+  switch (errorCode) {
+    case 'VALIDATION_ERROR':
+      statusCode = 400;
+      message = err.message || '请求参数错误';
+      break;
+    case 'UNAUTHORIZED':
+      statusCode = 401;
+      message = err.message || '未授权，请先登录';
+      break;
+    case 'FORBIDDEN':
+      statusCode = 403;
+      message = err.message || '无权访问';
+      break;
+    case 'NOT_FOUND':
+      statusCode = 404;
+      message = err.message || '资源不存在';
+      break;
+    case 'DB_ERROR':
+      statusCode = 503;
+      message = '数据库服务暂时不可用';
+      break;
+    default:
+      // 生产环境隐藏详细错误信息
+      if (process.env.NODE_ENV === 'production') {
+        message = '服务器内部错误';
+      } else {
+        message = err.message || '服务器内部错误';
+      }
+  }
+  
+  // 记录错误日志
+  logger.error('Server Error', {
+    errorCode,
+    statusCode,
+    message: err.message,
+    stack: err.stack,
     url: req.url,
     method: req.method,
     body: req.body,
+    ip: req.ip,
   });
-  res.status(500).json({ code: 500, message: '服务器内部错误', error: err.message });
+  
+  res.status(statusCode).json({ 
+    code: statusCode, 
+    message,
+    errorCode,
+    ...(process.env.NODE_ENV !== 'production' && { detail: err.message })
+  });
 });
 
 // 先启动服务，数据库和缓存改为懒加载模式

@@ -275,7 +275,7 @@ router.get('/stats', authMiddleware, async (req, res) => {
     // 获取今日访客数
     const today = new Date().toISOString().split('T')[0];
     const [todayVisitors] = await pool.query(
-      'SELECT COUNT(*) as count FROM visitor_applications WHERE DATE(created_at) = ?',
+      'SELECT COUNT(*) as count FROM visitor_applications WHERE DATE(submit_time) = ?'
       [today]
     );
 

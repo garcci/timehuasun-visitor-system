@@ -27,9 +27,16 @@ const format = winston.format.combine(
   winston.format.json()
 );
 
+// 根据环境设置日志级别
+const getLogLevel = () => {
+  if (process.env.LOG_LEVEL) return process.env.LOG_LEVEL;
+  if (process.env.NODE_ENV === 'production') return 'warn'; // 生产环境只记录 warn 及以上
+  return 'info'; // 开发环境记录 info 及以上
+};
+
 // 创建日志实例
 const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
+  level: getLogLevel(),
   levels,
   format,
   defaultMeta: {

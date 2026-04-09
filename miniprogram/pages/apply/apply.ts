@@ -704,6 +704,20 @@ Component({
         return
       }
       
+      // 检查是否有未添加的随行人员信息
+      const { newCompanion } = this.data
+      if (newCompanion.name.trim() || newCompanion.idCard.trim()) {
+        const res = await wx.showModal({
+          title: '提示',
+          content: '您填写了随行人员信息但未点击"确认添加此人"，是否继续提交？',
+          confirmText: '继续提交',
+          cancelText: '去添加'
+        })
+        if (!res.confirm) {
+          return
+        }
+      }
+      
       // 检查隐私授权
       const needAuthorization = await this.checkPrivacyAuthorization()
       if (!needAuthorization) {
