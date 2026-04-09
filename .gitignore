@@ -63,3 +63,4 @@ coverage/
 # Cache
 .cache/
 *.cache
+.lingma/
