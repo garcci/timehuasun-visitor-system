@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(grep -E '\\\\.\\(json|js|ts|wx\\)$')",
+      "Bash(python3 -m json.tool project.config.json)",
+      "Bash(python3 -m json.tool miniprogram/app.json)",
+      "Bash(python3 -m json.tool tsconfig.json)",
+      "Bash(while read:*)",
+      "Bash(do python3:*)",
+      "Bash(done)",
+      "Bash(find /Users/fangshiqiang/WeChatProjects/miniprogram-1 -maxdepth 2 -type f -name *.md -o -name *.json -o -name *.ts -o -name .cursor* -o -name .copilot*)"
+    ]
+  }
+}

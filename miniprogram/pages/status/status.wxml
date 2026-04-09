@@ -1,0 +1,119 @@
+<!--pages/status/status.wxml-->
+<scroll-view class="scroll" scroll-y>
+  <view class="page" wx:if="{{app}}">
+
+    <!-- 状态横幅 -->
+    <view class="status-banner status-{{app.status}}">
+      <view class="status-icon">
+        <text class="status-icon-inner" wx:if="{{app.status === 'approved'}}">✓</text>
+        <text class="status-icon-inner" wx:elif="{{app.status === 'rejected'}}">✕</text>
+        <text class="status-icon-inner" wx:else>···</text>
+      </view>
+      <text class="status-text">{{statusLabel}}</text>
+      <text wx:if="{{app.status === 'rejected' && app.rejectReason}}" class="status-reason">
+        拒绝原因：{{app.rejectReason}}
+      </text>
+    </view>
+
+    <!-- 凭证卡片（仅审批通过时显示） -->
+    <view wx:if="{{app.status === 'approved'}}" class="card credential-card">
+      <view class="credential-header">
+        <text class="credential-title">进厂凭证</text>
+        <view class="credential-badge">有效</view>
+      </view>
+      <view class="divider"></view>
+
+      <view class="info-row">
+        <text class="info-label">来访人姓名</text>
+        <text class="info-val">{{maskedName}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">身份证号</text>
+        <text class="info-val">{{maskedIdCard}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">来访时间</text>
+        <text class="info-val">{{visitTime}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">结束时间</text>
+        <text class="info-val">{{endTime}}</text>
+      </view>
+      <view wx:if="{{app.plateNumber}}" class="info-row">
+        <text class="info-label">车牌号</text>
+        <text class="info-val">{{app.plateNumber}}</text>
+      </view>
+
+      <view wx:if="{{app.companions.length > 0}}">
+        <view class="divider"></view>
+        <text class="companion-section-title">随行人员（{{app.companions.length}}人）</text>
+        <view wx:for="{{app.companions}}" wx:key="index" class="companion-row">
+          <view class="companion-info-item">
+            <text class="companion-name">{{item.maskedName}}</text>
+            <text class="companion-id">{{item.maskedIdCard}}</text>
+            <text wx:if="{{item.phone}}" class="companion-phone">{{item.maskedPhone || item.phone}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="divider"></view>
+      <view class="qr-wrap">
+        <text class="qr-hint-top">请向门卫出示二维码</text>
+        <canvas canvas-id="qrcode-canvas" class="qr-canvas"></canvas>
+        <text class="qr-id">编号：{{app.id}}</text>
+      </view>
+    </view>
+
+    <!-- 申请详情（待审批/已拒绝时显示） -->
+    <view wx:else class="card">
+      <text class="card-title">申请详情</text>
+      <view class="info-row">
+        <text class="info-label">姓名</text>
+        <text class="info-val">{{maskedName}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">身份证号</text>
+        <text class="info-val">{{maskedIdCard}}</text>
+      </view>
+      <view wx:if="{{app.plateNumber}}" class="info-row">
+        <text class="info-label">车牌号</text>
+        <text class="info-val">{{app.plateNumber}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">来访时间</text>
+        <text class="info-val">{{visitTime}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">结束时间</text>
+        <text class="info-val">{{endTime}}</text>
+      </view>
+      
+      <!-- 随行人员详细信息 -->
+      <view wx:if="{{app.companions.length > 0}}">
+        <view class="divider"></view>
+        <text class="companion-section-title">随行人员（{{app.companions.length}}人）</text>
+        <view wx:for="{{app.companions}}" wx:key="index" class="companion-row">
+          <view class="companion-info-item">
+            <text class="companion-name">{{item.maskedName}}</text>
+            <text class="companion-id">{{item.maskedIdCard}}</text>
+            <text wx:if="{{item.phone}}" class="companion-phone">{{item.maskedPhone || item.phone}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="info-row no-border">
+        <text class="info-label">提交时间</text>
+        <text class="info-val time-val">{{submitTimeFormatted}}</text>
+      </view>
+    </view>
+
+    <!-- 底部操作 -->
+    <view class="footer-btns">
+      <button wx:if="{{app.status === 'rejected'}}" class="btn-primary" bindtap="onGoApply">
+        重新申请
+      </button>
+      <button class="btn-secondary" bindtap="onGoHome">返回首页</button>
+    </view>
+
+  </view>
+</scroll-view>

@@ -1,0 +1,52 @@
+/* components/empty-state/empty-state.wxss */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  min-height: 60vh;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+  line-height: 1;
+}
+
+.empty-icon-img {
+  width: 240rpx;
+  height: 240rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.empty-btn {
+  background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+  color: white;
+  border-radius: 50rpx;
+  padding: 20rpx 60rpx;
+  font-size: 28rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(22, 119, 255, 0.3);
+}
+
+.empty-btn::after {
+  border: none;
+}

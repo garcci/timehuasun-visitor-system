@@ -1,0 +1,44 @@
+<!--pages/agreement/agreement.wxml-->
+<view class="page">
+  <scroll-view class="content-scroll" scroll-y>
+    <view class="content card">
+      <text class="agreement-title" user-select="true">访客保密协议</text>
+      <text class="agreement-subtitle" user-select="true">请仔细阅读以下条款，阅读完成后方可签署</text>
+      <text class="section-title" user-select="true">一、总则</text>
+      <text class="section-body" user-select="true">本协议适用于所有进入公司园区的外来访客。访客在进入园区前须认真阅读并签署本协议，确认遵守相关保密规定。</text>
+
+      <text class="section-title" user-select="true">二、保密范围</text>
+      <text class="section-body" user-select="true">访客在参观、访问期间可能接触到公司的商业信息、技术资料、产品数据、客户信息、业务流程及其他标注为保密的材料（统称“保密信息”）。</text>
+
+      <text class="section-title" user-select="true">三、保密义务</text>
+      <text class="section-body" user-select="true">1. 访客不得将所接触的保密信息以任何方式透露给第三方；
+2. 访客不得对公司设备、系统、文件进行拍照、录音、录像，除非事先获得书面授权；
+3. 访客不得擅自复制、摘抄、带走任何公司内部资料；
+4. 访客须遵守公司的安全管理规定，服从工作人员指引。</text>
+
+      <text class="section-title" user-select="true">四、责任与处罚</text>
+      <text class="section-body" user-select="true">若访客违反本协议，公司有权采取以下措施：
+1. 立即终止本次访问并要求访客离开园区；
+2. 依法追究访客的法律责任；
+3. 要求访客赔偿因违规行为给公司造成的一切损失。</text>
+
+      <text class="section-title" user-select="true">五、其他条款</text>
+      <text class="section-body" user-select="true">本协议自访客签署之日起生效。访客在园区内的所有行为均受本协议约束。如有疑问，请在进入园区前向接待人员咨询。</text>
+
+      <text class="section-title" user-select="true">六、签署确认</text>
+      <text class="section-body" user-select="true">本人已认真阅读上述保密协议全部内容，理解并同意遵守以上所有条款。</text>
+    </view>
+  </scroll-view>
+
+  <view class="footer">
+    <button
+      class="btn-sign {{canSign ? '' : 'btn-sign-disabled'}}"
+      bindtap="onSign"
+      disabled="{{!canSign || signed}}"
+    >
+      <text wx:if="{{signed}}">已签署</text>
+      <text wx:elif="{{canSign}}">我已阅读，同意签署</text>
+      <text wx:else>请阅读协议（{{countdown}}s）</text>
+    </button>
+  </view>
+</view>

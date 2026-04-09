@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/agreement/agreement",
+    "pages/apply/apply",
+    "pages/status/status",
+    "pages/history/history"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "时代华鑫访客",
+    "navigationBarBackgroundColor": "#1677ff"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents",
+  "__usePrivacyCheck__": true,
+  "requiredBackgroundModes": []
+}

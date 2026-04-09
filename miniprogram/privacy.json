@@ -1,0 +1,20 @@
+{
+  "privacyList": [
+    {
+      "key": "wx.getPhoneNumber",
+      "desc": "用于快速获取用户手机号，简化访客信息填写流程"
+    },
+    {
+      "key": "PhoneNumber",
+      "desc": "用于访客身份验证、联系被访人和紧急联系"
+    },
+    {
+      "key": "IDCard",
+      "desc": "用于实名登记、安全管控和门禁系统对接"
+    },
+    {
+      "key": "UserInfo",
+      "desc": "用于访客申请提交和审批流程"
+    }
+  ]
+}

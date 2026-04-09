@@ -1,0 +1,144 @@
+/**app.wxss — 全局样式**/
+page {
+  background-color: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  color: #1f2937;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+/* 卡片 */
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.04);
+  border: 1rpx solid #f1f5f9;
+}
+
+/* 主按钮 */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 96rpx;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(59, 130, 246, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:active {
+  background: #2563eb;
+  box-shadow: 0 2rpx 8rpx rgba(59, 130, 246, 0.35);
+}
+
+.btn-primary::after { border: none; }
+
+.btn-primary[disabled] {
+  background: #cbd5e1;
+  color: #94a3b8;
+  box-shadow: none;
+}
+
+/* 次按钮 */
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 96rpx;
+  background-color: #fff;
+  color: #3b82f6;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: 2rpx solid #dbeafe;
+  margin-bottom: 24rpx;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:active {
+  background-color: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.btn-secondary::after { border: none; }
+
+/* 危险按钮 */
+.btn-danger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 96rpx;
+  background-color: #fef2f2;
+  color: #ef4444;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  border: 2rpx solid #fecaca;
+  margin-bottom: 24rpx;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:active {
+  background-color: #fee2e2;
+  border-color: #ef4444;
+}
+
+.btn-danger::after { border: none; }
+
+/* 状态标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.tag-pending  { background: #fffbeb; color: #f59e0b; border: 1rpx solid #fde68a; }
+.tag-approved { background: #f0fdf4; color: #10b981; border: 1rpx solid #bbf7d0; }
+.tag-rejected { background: #fef2f2; color: #ef4444; border: 1rpx solid #fecaca; }
+
+/* 骨架屏动画 */
+@keyframes skeleton-loading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: 8rpx;
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 脉冲加载动画 */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}

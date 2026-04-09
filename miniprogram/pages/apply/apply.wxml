@@ -1,0 +1,207 @@
+<!--pages/apply/apply.wxml-->
+<scroll-view class="scroll" scroll-y>
+  <view class="page">
+
+    <!-- 来访人信息卡 -->
+    <view class="card">
+      <view class="card-hdr">
+        <view class="icon-badge green"></view>
+        <text class="card-ttl">来访人信息</text>
+      </view>
+      <view class="divider"></view>
+
+      <view class="field">
+        <text class="field-lbl">来访人姓名 <text class="req">*</text></text>
+        <input class="field-inp" placeholder="请输入来访人姓名" placeholder-class="inp-ph"
+          value="{{form.name}}" data-field="name" bindinput="onInput" />
+        <text wx:if="{{errors.name}}" class="err">{{errors.name}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">联系电话 <text class="req">*</text></text>
+        <input class="field-inp" type="number" placeholder="请输入手机号码" placeholder-class="inp-ph"
+          value="{{form.phone}}" bindinput="onPhoneInput" bindfocus="onPhoneFocus" bindblur="hidePickers" maxlength="11" />
+        
+        <!-- 历史手机号选择器 -->
+        <view wx:if="{{showPhonePicker && phoneHistory.length > 0}}" class="history-picker">
+          <view wx:for="{{phoneHistory}}" wx:key="index" 
+                class="history-item"
+                data-value="{{item}}"
+                bindtap="selectPhone">
+            {{item}}
+          </view>
+        </view>
+        
+        <text wx:if="{{errors.phone}}" class="err">{{errors.phone}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">证件类型 <text class="req">*</text></text>
+        <picker mode="selector" range="{{idTypeOptions}}" value="{{idTypeIndex}}" bindchange="onIdTypeChange">
+          <view class="field-picker {{form.idType ? '' : 'picker-ph'}}">
+            <text>{{form.idType || '请选择证件类型'}}</text>
+            <text class="picker-arrow">›</text>
+          </view>
+        </picker>
+        <text wx:if="{{errors.idType}}" class="err">{{errors.idType}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">证件号码 <text class="req">*</text></text>
+        <input class="field-inp" type="idcard" placeholder="请输入证件号码" placeholder-class="inp-ph"
+          value="{{form.idCard}}" bindinput="onIdCardInput" bindfocus="onIdCardFocus" bindblur="hidePickers" />
+        
+        <!-- 历史身份证选择器 -->
+        <view wx:if="{{showIdCardPicker && idCardHistory.length > 0}}" class="history-picker">
+          <view wx:for="{{idCardHistory}}" wx:key="index" 
+                class="history-item"
+                data-value="{{item}}"
+                bindtap="selectIdCard">
+            {{item}}
+          </view>
+        </view>
+        
+        <text wx:if="{{errors.idCard}}" class="err">{{errors.idCard}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">来访单位 <text class="req">*</text></text>
+        <input class="field-inp" placeholder="请输入所在单位" placeholder-class="inp-ph"
+          value="{{form.organization}}" data-field="organization" bindinput="onInput" />
+        <text wx:if="{{errors.organization}}" class="err">{{errors.organization}}</text>
+      </view>
+
+      <view class="field last">
+        <text class="field-lbl">车牌号码</text>
+        <input class="field-inp" type="text" placeholder="请输入车牌号码（选填）" placeholder-class="inp-ph"
+          value="{{form.plateNumber}}" data-field="plateNumber" bindinput="onPlateInput" maxlength="8" />
+        <text class="field-hint">示例：京A88888</text>
+      </view>
+    </view>
+
+    <!-- 随行人员卡 -->
+    <view class="card">
+      <view class="card-hdr">
+        <view class="icon-badge green"></view>
+        <text class="card-ttl">随行人员（可选）</text>
+      </view>
+      <view class="divider"></view>
+
+      <!-- 添加新随行人员 -->
+      <view class="field">
+        <text class="field-lbl">随行人员姓名</text>
+        <input class="field-inp" placeholder="请输入随行人员姓名" placeholder-class="inp-ph"
+          value="{{newCompanion.name}}" data-field="name" bindinput="onCompanionInput" />
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">身份证号码</text>
+        <input class="field-inp" type="idcard" placeholder="请输入身份证号码" placeholder-class="inp-ph"
+          value="{{newCompanion.idCard}}" data-field="idCard" bindinput="onCompanionInput" />
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">联系电话</text>
+        <input class="field-inp" type="number" placeholder="请输入联系电话（选填）" placeholder-class="inp-ph"
+          value="{{newCompanion.phone}}" data-field="phone" bindinput="onCompanionInput" maxlength="11" />
+      </view>
+
+      <view class="field">
+        <button class="add-companion-btn" bindtap="addCompanion">添 加</button>
+      </view>
+
+      <!-- 已添加的随行人员列表 -->
+      <view wx:if="{{companions.length > 0}}" class="companions-list">
+        <view class="list-title">已添加的随行人员（{{companions.length}}人）</view>
+        <view wx:for="{{companions}}" wx:key="index" class="companion-item">
+          <view class="companion-header">
+            <text class="companion-name">{{item.name}}</text>
+            <button class="remove-btn" data-index="{{index}}" bindtap="removeCompanion">
+              <text class="remove-icon">✕</text>
+            </button>
+          </view>
+          <text wx:if="{{item.phone}}" class="companion-phone">📞 {{item.phone}}</text>
+          <text class="companion-idcard">{{item.idCard}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 被访信息卡 -->
+    <view class="card">
+      <view class="card-hdr">
+        <view class="icon-badge orange"></view>
+        <text class="card-ttl">被访信息</text>
+      </view>
+      <view class="divider"></view>
+
+      <view class="field">
+        <text class="field-lbl">被访人联系电话 <text class="req">*</text></text>
+        <view class="input-with-icon">
+          <input class="field-inp {{validatingHost ? 'validating' : ''}} {{hostValidateSuccess ? 'validated-success' : ''}}" 
+                 type="number" placeholder="请输入被访人手机号码" placeholder-class="inp-ph"
+                 value="{{form.hostPhone}}" bindblur="onHostPhoneBlur" maxlength="11" />
+          <!-- 验证状态图标 -->
+          <icon wx:if="{{hostValidateSuccess}}" type="success" size="20" color="#07c160" class="validate-icon"/>
+          <icon wx:if="{{errors.hostPhone && !hostValidateSuccess}}" type="warn" size="20" color="#ee0a24" class="validate-icon"/>
+          <icon wx:if="{{validatingHost}}" type="loading" size="20" color="#999" class="validate-icon"/>
+        </view>
+        <text wx:if="{{errors.hostPhone}}" class="err">{{errors.hostPhone}}</text>
+        <text wx:if="{{hostValidateSuccess}}" class="success-tip">✓ 被访人信息验证通过</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">被访人姓名 <text class="req">*</text></text>
+        <view class="input-with-tag">
+          <input class="field-inp auto-filled" placeholder="自动填充" placeholder-class="inp-ph"
+                 value="{{form.hostName}}" readonly="{{true}}" disabled="{{true}}" />
+          <text wx:if="{{hostValidateSuccess}}" class="auto-fill-tag">自动填充</text>
+        </view>
+        <text wx:if="{{errors.hostName}}" class="err">{{errors.hostName}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">来访时间 <text class="req">*</text></text>
+        <view class="time-row">
+          <picker mode="date" value="{{form.visitDate}}" start="{{today}}" bindchange="onDateChange">
+            <view class="time-picker {{form.visitDate ? '' : 'picker-ph'}}">
+              {{form.visitDate || '选择日期'}}
+            </view>
+          </picker>
+          <picker mode="time" value="{{form.visitTime}}" bindchange="onTimeChange">
+            <view class="time-picker {{form.visitTime ? '' : 'picker-ph'}}">
+              {{form.visitTime || '选择时间'}}
+            </view>
+          </picker>
+        </view>
+        <text wx:if="{{errors.visitDate}}" class="err">{{errors.visitDate}}</text>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">结束时间 <text class="req">*</text></text>
+        <view class="time-row">
+          <picker mode="date" value="{{form.endDate}}" start="{{today}}" bindchange="onEndDateChange">
+            <view class="time-picker {{form.endDate ? '' : 'picker-ph'}}">
+              {{form.endDate || '选择日期'}}
+            </view>
+          </picker>
+          <picker mode="time" value="{{form.endTime}}" bindchange="onEndTimeChange">
+            <view class="time-picker {{form.endTime ? '' : 'picker-ph'}}">
+              {{form.endTime || '选择时间'}}
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="field">
+        <text class="field-lbl">来访事由 <text class="req">*</text></text>
+        <textarea class="field-ta" placeholder="请简要说明来访目的" placeholder-class="inp-ph"
+          value="{{form.purpose}}" data-field="purpose" bindinput="onInput" auto-height />
+        <text wx:if="{{errors.purpose}}" class="err">{{errors.purpose}}</text>
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <button class="submit-btn" bindtap="onSubmit">提 交 登 记</button>
+
+  </view>
+</scroll-view>

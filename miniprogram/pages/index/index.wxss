@@ -1,0 +1,72 @@
+/* pages/index/index.wxss */
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #f0f9ff 0%, #f8fafc 45%);
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 80rpx 40rpx calc(80rpx + env(safe-area-inset-bottom));
+  box-sizing: border-box;
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 80rpx;
+}
+
+.hero-logo {
+  width: 640rpx;
+  height: 640rpx;
+  margin-bottom: 12rpx;
+}
+
+.hero-title {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 16rpx;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.hero-sub {
+  font-size: 28rpx;
+  color: #6b7280;
+  text-align: center;
+  max-width: 480rpx;
+  line-height: 1.6;
+}
+
+.actions { width: 100%; }
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  background: #fffbeb;
+  border: 1rpx solid #fde68a;
+  border-radius: 16rpx;
+  padding: 24rpx 32rpx;
+  margin-bottom: 24rpx;
+  color: #92400e;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.notice::before {
+  content: '⚠';
+  margin-right: 16rpx;
+  font-size: 28rpx;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+}

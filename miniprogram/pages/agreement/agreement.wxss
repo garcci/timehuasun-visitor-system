@@ -1,0 +1,117 @@
+/* pages/agreement/agreement.wxss */
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  margin-top: 24rpx;
+  box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.04);
+}
+
+.content-scroll {
+  flex: 1;
+  height: 0;
+  padding: 32rpx;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.agreement-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 8rpx;
+  display: block;
+  line-height: 1.5;
+  letter-spacing: 2rpx;
+}
+
+.agreement-subtitle {
+  font-size: 24rpx;
+  color: #9ca3af;
+  text-align: center;
+  margin-bottom: 32rpx;
+  display: block;
+  line-height: 1.6;
+  padding: 0 16rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-top: 8rpx;
+  margin-bottom: 16rpx;
+  display: block;
+  padding-left: 16rpx;
+  border-left: 4rpx solid #3b82f6;
+  line-height: 1.5;
+}
+
+.section-body {
+  font-size: 28rpx;
+  color: #374151;
+  line-height: 1.9;
+  text-align: justify;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  padding: 0 4rpx;
+}
+
+/* 底部签署区 */
+.footer {
+  padding: 32rpx 32rpx;
+  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  background: #fff;
+  border-top: 1rpx solid #f1f5f9;
+  box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.04);
+}
+
+.btn-sign {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 96rpx;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4rpx 16rpx rgba(59, 130, 246, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-sign:active {
+  background: #2563eb;
+  box-shadow: 0 2rpx 8rpx rgba(59, 130, 246, 0.35);
+}
+
+.btn-sign::after { border: none; }
+
+.btn-sign-disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  box-shadow: none;
+}

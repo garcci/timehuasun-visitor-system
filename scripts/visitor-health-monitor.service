@@ -1,0 +1,24 @@
+[Unit]
+Description=Visitor Backend Health Monitor
+After=network.target pm2-root.service
+Requires=pm2-root.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/visitor-health-check.sh
+Restart=on-failure
+RestartSec=300
+User=root
+Group=root
+
+# 资源限制
+MemoryMax=100M
+CPUQuota=10%
+
+# 日志
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=visitor-health-monitor
+
+[Install]
+WantedBy=multi-user.target

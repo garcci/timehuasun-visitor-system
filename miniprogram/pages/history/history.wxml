@@ -1,0 +1,60 @@
+<!--pages/history/history.wxml-->
+<scroll-view class="scroll" scroll-y>
+  <view class="page">
+
+    <!-- 空状态组件 -->
+    <empty-state 
+      show="{{list.length === 0}}"
+      title="暂无访客记录"
+      desc="您还没有提交过访客申请"
+      show-btn="true"
+      btn-text="立即申请"
+      bind:btntap="onGoApply"
+    />
+
+    <view wx:if="{{list.length > 0}}">
+      <view
+        wx:for="{{list}}"
+        wx:key="id"
+        class="card item item-{{item.status}}"
+        bindtap="onItemTap"
+        data-id="{{item.id}}"
+      >
+        <view class="item-header">
+          <view class="item-name-row">
+            <text class="item-name">{{item.name}}</text>
+            <view wx:if="{{item.companions.length > 0}}" class="companions-badge">
+              +{{item.companions.length}}人
+            </view>
+          </view>
+          <view class="tag tag-{{item.status}}">{{item.statusLabel}}</view>
+        </view>
+
+        <view class="item-time-row">
+          <text class="item-time-label">来访时间</text>
+          <text class="item-time-val">{{item.visitTime}}</text>
+        </view>
+        <view class="item-time-row">
+          <text class="item-time-label">结束时间</text>
+          <text class="item-time-val">{{item.endTime}}</text>
+        </view>
+
+        <!-- 随行人员信息 -->
+        <view wx:if="{{item.companions.length > 0}}" class="companions-section">
+          <text class="companions-title">随行人员（{{item.companions.length}}人）</text>
+          <view wx:for="{{item.companions}}" wx:key="index" wx:for-item="companion" class="companion-info">
+            <text class="companion-name">{{companion.maskedName || companion.name}}</text>
+            <text class="companion-detail">{{companion.maskedIdCard || companion.idCard}}</text>
+            <text wx:if="{{companion.phone}}" class="companion-phone">{{companion.maskedPhone || companion.phone}}</text>
+          </view>
+        </view>
+
+        <view class="item-footer">
+          <text class="item-submit-time">提交于 {{item.submitTimeFormatted}}</text>
+          <text class="item-arrow">›</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>
