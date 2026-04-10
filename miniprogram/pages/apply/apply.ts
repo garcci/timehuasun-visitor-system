@@ -1,5 +1,5 @@
 // pages/apply/apply.ts
-import { submitApplication, getDraft, saveDraft, getToday, submitApplicationApi, API_BASE_URL, getApplications } from '../../utils/api'
+import { getDraft, saveDraft, getToday, submitApplicationApi, API_BASE_URL, getApplications } from '../../utils/api'
 
 const ID_TYPES = ['居民身份证', '护照', '港澳通行证', '台湾通行证', '其他']
 
@@ -19,12 +19,6 @@ interface FormData {
   endTime: string
   purpose: string
   remark: string
-}
-
-interface Companion {
-  name: string
-  idCard: string
-  phone?: string
 }
 
 Component({
@@ -590,7 +584,7 @@ Component({
         })
         
         if (res.statusCode === 200) {
-          const { code, data, message } = res.data
+          const { code, data } = res.data
           
           if (code === 0) {
             // ✅ 查询成功，自动填充所有字段
@@ -640,23 +634,18 @@ Component({
         
         // 区分不同类型的错误
         let errorMessage = '系统繁忙，请稍后重试'
-        let errorTitle = '提示'
         
         if (error.code === 'ETIMEDOUT' || error.errMsg?.includes('timeout')) {
           // 超时错误
-          errorTitle = '网络超时'
           errorMessage = '查询超时，请检查网络连接后重试'
         } else if (error.code === 'ENOTFOUND' || error.errMsg?.includes('network')) {
           // 网络错误
-          errorTitle = '网络连接失败'
           errorMessage = '网络连接失败，请检查网络设置'
         } else if (error.statusCode === 500) {
           // 服务器错误
-          errorTitle = '服务器错误'
           errorMessage = '服务器开小差了，请联系管理员'
         } else if (error.statusCode === 503) {
           // 服务不可用
-          errorTitle = '服务不可用'
           errorMessage = 'OA 系统暂时不可用，请稍后重试'
         }
         

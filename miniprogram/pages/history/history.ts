@@ -1,5 +1,5 @@
 // pages/history/history.ts
-import { getApplications, getApplicationsFromApi, formatDateTime, formatSubmitTime, formatVisitTime, formatEndTime } from '../../utils/api'
+import { getApplications, getApplicationsFromApi, formatSubmitTime, formatVisitTime, formatEndTime } from '../../utils/api'
 import { maskName, maskIdCard, maskPhone } from '../../utils/mask'
 import type { Application } from '../../utils/api'
 

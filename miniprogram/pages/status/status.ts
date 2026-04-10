@@ -1,5 +1,5 @@
 // pages/status/status.ts
-import { getApplicationById, getApplicationByIdApi, mockUpdateStatus, formatDateTime, formatSubmitTime } from '../../utils/api'
+import { getApplicationByIdApi, mockUpdateStatus, formatDateTime, formatSubmitTime } from '../../utils/api'
 import { maskIdCard, maskPhone, maskName } from '../../utils/mask'
 import type { Application } from '../../utils/api'
 
