@@ -22,9 +22,12 @@
     ]
   },
   "include": [
-    "./**/*.ts"
+    "./miniprogram/**/*.ts",
+    "./typings/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "backend",
+    "admin"
   ]
 }
