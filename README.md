@@ -18,8 +18,13 @@
 │   └── .env             # 环境变量
 ├── admin/               # 管理后台（Vue.js）
 ├── docs/                # 文档
-│   └── archive/         # 归档文档
-└── PRD.md              # 产品需求文档
+│   ├── guides/          # 使用指南
+│   ├── reports/         # 优化报告
+│   ├── oa/              # OA集成文档
+│   └── PROJECT_STRUCTURE.md # 项目结构
+├── PRD.md               # 产品需求文档
+├── SIGNATURE_RULES.md   # 签名规则
+└── JAVA_UTIL_README.md  # Java工具说明
 ```
 
 ## 🚀 快速开始
@@ -77,10 +82,24 @@ ssh user@server "cd /path && npm install && pm2 start src/index.js"
 
 ## 📝 文档
 
-详细文档请查看 [docs/archive/](docs/archive/) 目录。
+### 使用指南
+- [管理后台登录指南](docs/guides/ADMIN_LOGIN_GUIDE.md)
+- [PM2部署指南](docs/guides/PM2_SETUP_GUIDE.md)
+- [高可用保障](docs/guides/HIGH_AVAILABILITY_GUARANTEE.md)
 
-核心文档：
+### 优化报告
+- [系统优化报告](docs/reports/OPTIMIZATION_REPORT.md)
+- [优化总结](docs/reports/OPTIMIZATION_SUMMARY.md)
+- [SQL修复报告](docs/reports/SQL_FIX_REPORT.md)
+
+### OA集成
+- [OA API密钥配置](docs/oa/OA_API_SECRET_CONFIG.md)
+- [OA回调示例](docs/oa/OA_CALLBACK_EXAMPLE.md)
+
+### 核心文档
 - [PRD.md](PRD.md) - 产品需求文档
+- [SIGNATURE_RULES.md](SIGNATURE_RULES.md) - 签名规则
+- [PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md) - 项目结构
 
 ## 🔐 安全提示
 
