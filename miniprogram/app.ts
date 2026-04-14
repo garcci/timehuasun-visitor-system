@@ -1,16 +1,45 @@
 // app.ts
+import { initErrorHandler } from './utils/error-handler'
+import { initNetworkMonitor } from './utils/network'
+
 App<IAppOption>({
-  globalData: {},
+  globalData: {
+    isConnected: true,
+    networkType: 'unknown',
+  },
   onLaunch() {
-    // 模拟版本中注释掉微信登录，避免网络请求失败
-    // wx.login({
-    //   success: res => {
-    //     // 发送 res.code 到后台换取 openId, sessionKey, unionId
-    //     console.log('wx.login code:', res.code)
-    //   },
-    //   fail: err => {
-    //     console.warn('wx.login failed (expected in demo):', err)
-    //   },
-    // })
+    // 初始化全局错误处理
+    initErrorHandler()
+    
+    // 初始化网络监听
+    initNetworkMonitor((isConnected, networkType) => {
+      this.globalData.isConnected = isConnected
+      this.globalData.networkType = networkType
+    })
+    
+    // 检查更新
+    this.checkUpdate()
+  },
+  
+  // 检查小程序更新
+  checkUpdate() {
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager()
+      updateManager.onCheckForUpdate((res) => {
+        if (res.hasUpdate) {
+          updateManager.onUpdateReady(() => {
+            wx.showModal({
+              title: '更新提示',
+              content: '新版本已准备好，是否重启应用？',
+              success: (res) => {
+                if (res.confirm) {
+                  updateManager.applyUpdate()
+                }
+              }
+            })
+          })
+        }
+      })
+    }
   },
 })

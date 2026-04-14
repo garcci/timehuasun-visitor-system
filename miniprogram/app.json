@@ -9,11 +9,27 @@
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "时代华鑫访客",
-    "navigationBarBackgroundColor": "#1677ff"
+    "navigationBarBackgroundColor": "#1677ff",
+    "backgroundColor": "#f8fafc",
+    "enablePullDownRefresh": false
   },
   "style": "v2",
   "componentFramework": "glass-easel",
   "lazyCodeLoading": "requiredComponents",
   "__usePrivacyCheck__": true,
-  "requiredBackgroundModes": []
+  "requiredBackgroundModes": [],
+  "optimization": {
+    "subPackages": true
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["pages/apply/apply"]
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于获取位置信息"
+    }
+  }
 }

@@ -166,3 +166,18 @@ export async function retryRequest<T>(
   
   throw lastError
 }
+
+/**
+ * 初始化全局错误处理
+ */
+export function initErrorHandler(): void {
+  // 监听全局错误
+  wx.onError((error) => {
+    console.error('🚨 全局错误:', error)
+  })
+  
+  // 监听 Promise 未捕获错误
+  wx.onUnhandledRejection((res) => {
+    console.error('🚨 未处理的 Promise 错误:', res.reason)
+  })
+}
