@@ -97,11 +97,7 @@ Component({
       const endTime = `${endHours}:${minutes}`
       
       this.setData({ 
-        today: getToday(),
-        'form.visitDate': currentDate,
-        'form.visitTime': currentTime,
-        'form.endDate': currentDate,
-        'form.endTime': endTime
+        today: getToday()
       })
       
       // 检查是否有已提交的申请
@@ -110,6 +106,16 @@ Component({
       
       // 尝试加载草稿
       const draft = getDraft()
+      
+      // 如果没有草稿，才设置默认时间
+      if (!draft) {
+        this.setData({ 
+          'form.visitDate': currentDate,
+          'form.visitTime': currentTime,
+          'form.endDate': currentDate,
+          'form.endTime': endTime
+        })
+      }
       
       if (draft) {
         // ✅ 有草稿，恢复草稿（无论是否有已提交的申请）
