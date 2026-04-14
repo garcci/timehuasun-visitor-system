@@ -3,7 +3,7 @@ page {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f8fafc;
+  background: #f1f5f9;
 }
 
 .page {
@@ -11,93 +11,190 @@ page {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #fff;
-  border-radius: 24rpx 24rpx 0 0;
-  margin-top: 24rpx;
-  box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.04);
 }
 
 .content-scroll {
   flex: 1;
   height: 0;
-  padding: 32rpx;
+  padding: 24rpx;
   box-sizing: border-box;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 20rpx;
+}
+
+/* 头部区域 */
+.header-section {
+  text-align: center;
+  padding: 16rpx 0;
 }
 
 .agreement-title {
-  font-size: 44rpx;
-  font-weight: 700;
-  color: #1f2937;
-  text-align: center;
-  margin-bottom: 8rpx;
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #1e293b;
   display: block;
-  line-height: 1.5;
-  letter-spacing: 2rpx;
+  line-height: 1.4;
+  margin-bottom: 12rpx;
 }
 
 .agreement-subtitle {
   font-size: 26rpx;
-  color: #6b7280;
-  text-align: center;
-  margin-bottom: 24rpx;
+  color: #64748b;
   display: block;
-  line-height: 1.6;
-  padding: 0 16rpx;
+  font-weight: 500;
+  margin-bottom: 24rpx;
+}
+
+.intro-card {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-radius: 16rpx;
+  padding: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  border: 1rpx solid #bfdbfe;
+}
+
+.intro-text {
+  font-size: 28rpx;
+  color: #334155;
+  line-height: 1.7;
+}
+
+.intro-text.highlight {
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+/* 章节卡片 */
+.section-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-number {
+  width: 48rpx;
+  height: 48rpx;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: 700;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-number.urgent {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.section-title-text {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1e293b;
+  flex: 1;
+}
+
+.section-title-text.urgent {
+  color: #dc2626;
+}
+
+/* 列表项 */
+.list-item {
+  font-size: 28rpx;
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 16rpx;
+  padding-left: 8rpx;
+}
+
+.list-item:last-child {
+  margin-bottom: 0;
+}
+
+.list-item.warning {
+  background: #fef3c7;
+  padding: 16rpx;
+  border-radius: 10rpx;
+  color: #92400e;
   font-weight: 500;
 }
 
-.agreement-intro {
+/* 紧急卡片 */
+.special-card {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1rpx solid #fecaca;
+}
+
+.urgent-body {
   font-size: 28rpx;
-  color: #374151;
+  color: #991b1b;
   line-height: 1.8;
-  margin-bottom: 32rpx;
-  display: block;
-  padding: 24rpx;
-  background: #f0f9ff;
-  border-radius: 12rpx;
-  border-left: 4rpx solid #3b82f6;
+  font-weight: 500;
 }
 
-.section-title {
+/* 签署确认区 */
+.sign-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.sign-title {
   font-size: 30rpx;
-  font-weight: 600;
-  color: #3b82f6;
-  margin-top: 8rpx;
-  margin-bottom: 16rpx;
+  font-weight: 700;
+  color: #1e293b;
   display: block;
-  padding-left: 16rpx;
-  border-left: 4rpx solid #3b82f6;
-  line-height: 1.5;
+  margin-bottom: 12rpx;
 }
 
-.section-body {
+.sign-text {
   font-size: 28rpx;
-  color: #374151;
-  line-height: 1.9;
-  text-align: justify;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-  width: 100%;
-  box-sizing: border-box;
-  display: block;
-  padding: 0 4rpx;
+  color: #64748b;
+  line-height: 1.7;
 }
 
 /* 底部签署区 */
 .footer {
-  padding: 32rpx 32rpx;
-  padding-bottom: calc(32rpx + env(safe-area-inset-bottom));
+  padding: 24rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
   background: #fff;
-  border-top: 1rpx solid #f1f5f9;
-  box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.04);
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6rpx;
+  background: #e2e8f0;
+  border-radius: 3rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 3rpx;
+  transition: width 1s linear;
 }
 
 .btn-sign {
@@ -106,19 +203,19 @@ page {
   justify-content: center;
   width: 100%;
   height: 96rpx;
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: #fff;
   border-radius: 16rpx;
   font-size: 32rpx;
   font-weight: 600;
   border: none;
-  box-shadow: 0 4rpx 16rpx rgba(59, 130, 246, 0.25);
+  box-shadow: 0 4rpx 16rpx rgba(59, 130, 246, 0.3);
   transition: all 0.2s ease;
 }
 
 .btn-sign:active {
-  background: #2563eb;
-  box-shadow: 0 2rpx 8rpx rgba(59, 130, 246, 0.35);
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(59, 130, 246, 0.4);
 }
 
 .btn-sign::after { border: none; }
@@ -127,4 +224,10 @@ page {
   background: #cbd5e1;
   color: #94a3b8;
   box-shadow: none;
+  transform: none;
+}
+
+.btn-signed {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4rpx 16rpx rgba(16, 185, 129, 0.3);
 }

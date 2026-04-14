@@ -8,6 +8,7 @@ Component({
     countdown: COUNTDOWN,
     canSign: false,
     signed: false,
+    COUNTDOWN, // 暴露给模板用于进度条计算
   },
   lifetimes: {
     detached() {
