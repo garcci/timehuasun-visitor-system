@@ -2,31 +2,45 @@
 <view class="page">
   <scroll-view class="content-scroll" scroll-y>
     <view class="content card">
-      <text class="agreement-title" user-select="true">访客保密协议</text>
-      <text class="agreement-subtitle" user-select="true">请仔细阅读以下条款，阅读完成后方可签署</text>
-      <text class="section-title" user-select="true">一、总则</text>
-      <text class="section-body" user-select="true">本协议适用于所有进入公司园区的外来访客。访客在进入园区前须认真阅读并签署本协议，确认遵守相关保密规定。</text>
+      <text class="agreement-title" user-select="true">外来人员入厂安全、保密告知书</text>
+      <text class="agreement-subtitle" user-select="true">株洲时代华鑫新材料技术股份有限公司</text>
+      <text class="agreement-intro" user-select="true">您好：
+欢迎您来到株洲时代华鑫新材料技术股份有限公司。
+为确保您在我司期间的安全和健康，在进入工厂前，敬请仔细阅读并遵守以下的安全、保密规定：</text>
 
-      <text class="section-title" user-select="true">二、保密范围</text>
-      <text class="section-body" user-select="true">访客在参观、访问期间可能接触到公司的商业信息、技术资料、产品数据、客户信息、业务流程及其他标注为保密的材料（统称“保密信息”）。</text>
+      <text class="section-title" user-select="true">一、相关方人员进入厂区应注意事项：</text>
+      <text class="section-body" user-select="true">1.我公司主要涉及以下几类危险源：物体打击、车辆伤害、机械伤害、起重吊装伤害、触电、高处坠落、中毒和窒息等；
+2.请全程佩戴我司门卫发给您的来宾出入证，并在陪同人员的带领下进入厂区，离开时，请将来宾出入证还给门卫；
+3.请服从接待人员及警卫的指挥，进入厂区请留意厂区设置的安全警示标识，遵守我司现场安全管理制度、指示、标识要求；
+4.禁止进入与您来访业务无关的场所；
+5.厂区车间、外围通道、办公区域及其他作业现场区域禁止吸烟、嚼槟榔；
+6.注意厂内行驶的机动车辆，与其至少保持前后2米/左右1米的安全距离；
+7.请保管好您携带的贵重物品，若发生丢失或者遗失自行负责；
+8.手机一次性保护套佩戴规定要求：进入时，佩戴好手机保护套。离开厂区时，需经门卫检查手机保护套完整后才能离开，如若发现私自撕开手机保护套，则需接受检查，确认无异，同时对该行为处500元/次的罚款，手续完成后方可离开；
+9.进厂需在门岗详细登记所携带物品(电子设备、材料、工具等)，出门时需给门卫检查确认是否一致，若出现登记外的物品需开《物品出门许可证》审批完成后方可放行。</text>
 
-      <text class="section-title" user-select="true">三、保密义务</text>
-      <text class="section-body" user-select="true">1. 访客不得将所接触的保密信息以任何方式透露给第三方；
-2. 访客不得对公司设备、系统、文件进行拍照、录音、录像，除非事先获得书面授权；
-3. 访客不得擅自复制、摘抄、带走任何公司内部资料；
-4. 访客须遵守公司的安全管理规定，服从工作人员指引。</text>
+      <text class="section-title" user-select="true">二、进入车间生产作业场所注意事项：</text>
+      <text class="section-body" user-select="true">1.进入生产现场，请按要求佩戴个人劳动防护用品；
+2.应在公司陪同人员的带领下方可进入生产现场，按照指定路线行走，不得自行在生产区域内活动；
+3.在经过起重吊装作业区域时，严禁在吊物下方穿行及停留，待吊装结束后方可通过；
+4.在车间现场区域遇到动火、登高、用电等危险作业，未经授权严禁靠近危险作业区域；
+5.未经许可，禁止私自触碰、操作我司设备或进入设备设施内部；
+6.注意避让叉车、运输车辆及其他厂内机动车辆，防止碰撞伤人。</text>
 
-      <text class="section-title" user-select="true">四、责任与处罚</text>
-      <text class="section-body" user-select="true">若访客违反本协议，公司有权采取以下措施：
-1. 立即终止本次访问并要求访客离开园区；
-2. 依法追究访客的法律责任；
-3. 要求访客赔偿因违规行为给公司造成的一切损失。</text>
+      <text class="section-title" user-select="true">三、紧急情况处理</text>
+      <text class="section-body" user-select="true">如发现火灾、安全生产等意外事故时，请保护好您的自身安全，并第一时间告知您的接待人员，按照安全出口、疏散通道标识，以最快的速度疏散到安全地方。</text>
 
-      <text class="section-title" user-select="true">五、其他条款</text>
-      <text class="section-body" user-select="true">本协议自访客签署之日起生效。访客在园区内的所有行为均受本协议约束。如有疑问，请在进入园区前向接待人员咨询。</text>
+      <text class="section-title" user-select="true">四、保密要求</text>
+      <text class="section-body" user-select="true">1.相关方人员入厂后请遵守我司保密管理规定，履行保密义务；
+2.未经许可，不得在我司内部摄像、拍照、录音、微信发朋友圈；
+3.禁止在互联网及其他公共信息网络或者未采取保密措施的有线和无线通信中传递我司信息，包括但不限于微信、微博、QQ、电子邮件平台等；
+4.未经许可，不得私自在我司厂区其他各作业现场及办公区域逗留；
+5.未经许可，不得查看我司涉密文件或相关信息；
+6.未经许可，不得擅自携带可存储信息资产的电子设备进入公司；
+7.进入车间或其他作业区域禁止私自拷贝设备中重要参数信息。</text>
 
-      <text class="section-title" user-select="true">六、签署确认</text>
-      <text class="section-body" user-select="true">本人已认真阅读上述保密协议全部内容，理解并同意遵守以上所有条款。</text>
+      <text class="section-title" user-select="true">签署确认</text>
+      <text class="section-body" user-select="true">本人已认真阅读上述告知书全部内容，理解并同意遵守以上所有条款。</text>
     </view>
   </scroll-view>
 
