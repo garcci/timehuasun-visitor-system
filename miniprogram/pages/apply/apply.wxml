@@ -2,6 +2,26 @@
 <scroll-view class="scroll" scroll-y scroll-into-view="{{scrollIntoView}}" scroll-with-animation>
   <view class="page">
 
+    <!-- 表单进度条 -->
+    <view class="progress-section">
+      <view class="progress-header">
+        <text class="progress-title">填写进度</text>
+        <text class="progress-text">{{completedCount}}/{{totalFields}} 项</text>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progressPercent}}%"></view>
+      </view>
+      <text wx:if="{{unfilledRequired.length > 0}}" class="progress-hint">待填写: {{unfilledRequired.join('、')}}</text>
+    </view>
+
+    <!-- 快捷操作栏 -->
+    <view wx:if="{{lastApplication}}" class="quick-actions">
+      <view class="quick-action-btn" bindtap="copyLastApplication">
+        <text class="quick-icon">📋</text>
+        <text class="quick-text">复制上次申请</text>
+      </view>
+    </view>
+
     <!-- 来访人信息卡 -->
     <view class="card">
       <view class="card-hdr">
@@ -75,6 +95,12 @@
 
       <view class="field {{errors.organization ? 'error' : ''}} {{form.organization ? 'completed' : ''}}" id="org-field">
         <text class="field-lbl">来访单位 <text class="req">*</text></text>
+        
+        <!-- 常用单位快速选择 -->
+        <view wx:if="{{orgHistory.length > 0}}" class="org-tags">
+          <text wx:for="{{orgHistory}}" wx:key="index" class="org-tag" data-value="{{item}}" catchtap="selectOrg">{{item}}</text>
+        </view>
+        
         <view class="input-with-clear">
           <input class="field-inp" placeholder="请输入所在单位" placeholder-class="inp-ph"
             value="{{form.organization}}" data-field="organization" bindinput="onInput" confirm-type="next" />

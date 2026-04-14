@@ -61,6 +61,13 @@ Component({
     // 常用被访人
     frequentHosts: [] as Array<{name: string, phone: string, loginName: string}>,
     showFrequentHosts: false, // 是否显示常用被访人
+    // 进度统计
+    completedCount: 0, // 已完成字段数
+    totalFields: 8, // 总必填字段数
+    progressPercent: 0, // 进度百分比
+    unfilledRequired: [] as string[], // 未填写的必填项
+    orgHistory: [] as string[], // 常用单位历史
+    lastApplication: null as any, // 上次申请记录
   },
   pageLifetimes: {
     show() {
@@ -155,6 +162,19 @@ Component({
       this.loadHistory()
       // 加载常用被访人
       this.loadFrequentHosts()
+      // 加载常用单位
+      this.loadOrgHistory()
+      // 加载上次申请记录
+      this.loadLastApplication()
+      // 计算进度
+      this.calculateProgress()
+    },
+    hide() {
+      // 页面隐藏时，如果有未保存的内容，自动保存草稿
+      const hasContent = Object.values(this.data.form).some(v => v && v.toString().trim())
+      if (hasContent && !this.data.isSubmitting) {
+        this.autoSaveDraft()
+      }
     },
   },
   methods: {
@@ -191,6 +211,103 @@ Component({
       } catch (e) {
         console.error('加载常用被访人失败:', e)
       }
+    },
+    
+    // 加载常用单位历史
+    loadOrgHistory() {
+      try {
+        const orgs = wx.getStorageSync('org_history') || []
+        this.setData({ orgHistory: orgs.slice(0, 5) })
+      } catch (e) {
+        console.error('加载常用单位失败:', e)
+      }
+    },
+    
+    // 选择常用单位
+    selectOrg(e: any) {
+      const org = e.currentTarget.dataset.value as string
+      this.setData({ 'form.organization': org })
+      this.calculateProgress()
+      this.autoSaveDraft()
+    },
+    
+    // 保存单位到历史
+    saveOrgHistory(org: string) {
+      if (!org) return
+      try {
+        let history = wx.getStorageSync('org_history') || []
+        history = history.filter((item: string) => item !== org)
+        history.unshift(org)
+        history = history.slice(0, 5)
+        wx.setStorageSync('org_history', history)
+      } catch (e) {
+        console.error('保存单位历史失败:', e)
+      }
+    },
+    
+    // 加载上次申请记录
+    loadLastApplication() {
+      try {
+        const apps = wx.getStorageSync('applications') || []
+        if (apps.length > 0) {
+          this.setData({ lastApplication: apps[apps.length - 1] })
+        }
+      } catch (e) {
+        console.error('加载上次申请失败:', e)
+      }
+    },
+    
+    // 复制上次申请
+    copyLastApplication() {
+      const last = this.data.lastApplication
+      if (!last) return
+      
+      wx.showModal({
+        title: '复制上次申请',
+        content: '将自动填充来访人信息（不含被访人），是否继续？',
+        success: (res) => {
+          if (res.confirm) {
+            this.setData({
+              'form.name': last.name || '',
+              'form.phone': last.phone || '',
+              'form.idCard': last.idCard || '',
+              'form.organization': last.organization || '',
+              'form.plateNumber': last.plateNumber || ''
+            })
+            this.calculateProgress()
+            this.autoSaveDraft()
+            wx.showToast({ title: '已复制', icon: 'success' })
+          }
+        }
+      })
+    },
+    
+    // 计算表单进度
+    calculateProgress() {
+      const f = this.data.form
+      const required = ['name', 'phone', 'idType', 'idCard', 'organization', 'hostPhone', 'visitDate', 'purpose']
+      const fieldNames: Record<string, string> = {
+        name: '姓名', phone: '电话', idType: '证件类型', idCard: '证件号码',
+        organization: '单位', hostPhone: '被访人电话', visitDate: '来访时间', purpose: '来访事由'
+      }
+      
+      let completed = 0
+      const unfilled: string[] = []
+      
+      required.forEach(field => {
+        const value = (f as any)[field]
+        if (value && value.toString().trim()) {
+          completed++
+        } else {
+          unfilled.push(fieldNames[field])
+        }
+      })
+      
+      this.setData({
+        completedCount: completed,
+        progressPercent: Math.round((completed / required.length) * 100),
+        unfilledRequired: unfilled
+      })
     },
     
     // 保存常用被访人
@@ -378,6 +495,8 @@ Component({
       this.setData({ [`form.${field}`]: value })
       // 实时验证该字段
       this.validateField(field, value)
+      // 计算进度
+      this.calculateProgress()
       // 自动保存草稿
       this.autoSaveDraft()
     },
@@ -478,6 +597,7 @@ Component({
     onIdTypeChange(e: any) {
       const idx = Number(e.detail.value)
       this.setData({ idTypeIndex: idx, 'form.idType': ID_TYPES[idx] })
+      this.calculateProgress()
     },
     onDateChange(e: any) {
       const selectedDate = e.detail.value as string
@@ -498,6 +618,7 @@ Component({
       }
       
       this.setData({ 'form.visitDate': selectedDate })
+      this.calculateProgress()
       
       // 如果结束日期小于开始日期，自动调整结束日期
       if (this.data.form.endDate && this.data.form.endDate < selectedDate) {
@@ -507,6 +628,7 @@ Component({
     onTimeChange(e: any) {
       const selectedTime = e.detail.value as string
       this.setData({ 'form.visitTime': selectedTime })
+      this.calculateProgress()
       
       // 检查结束时间是否小于开始时间
       if (this.data.form.endTime && this.data.form.endTime <= selectedTime && 
@@ -642,6 +764,9 @@ Component({
               validatingHost: false
             })
             
+            // 计算进度
+            this.calculateProgress()
+            
             wx.showToast({
               title: '查询成功',
               icon: 'success'
@@ -740,6 +865,7 @@ Component({
     clearField(e: any) {
       const field = e.currentTarget.dataset.field as string
       this.setData({ [`form.${field}`]: '' })
+      this.calculateProgress()
       this.autoSaveDraft()
     },
     
