@@ -68,6 +68,7 @@ Component({
     unfilledRequired: [] as string[], // 未填写的必填项
     orgHistory: [] as string[], // 常用单位历史
     lastApplication: null as any, // 上次申请记录
+    companionHistory: [] as Array<{name: string, idCard: string, phone?: string}>, // 常用随行人员
   },
   pageLifetimes: {
     show() {
@@ -164,6 +165,8 @@ Component({
       this.loadFrequentHosts()
       // 加载常用单位
       this.loadOrgHistory()
+      // 加载常用随行人员
+      this.loadCompanionHistory()
       // 加载上次申请记录
       this.loadLastApplication()
       // 计算进度
@@ -280,6 +283,53 @@ Component({
           }
         }
       })
+    },
+    
+    // 加载常用随行人员
+    loadCompanionHistory() {
+      try {
+        const history = wx.getStorageSync('companion_history') || []
+        this.setData({ companionHistory: history.slice(0, 5) })
+      } catch (e) {
+        console.error('加载常用随行人员失败:', e)
+      }
+    },
+    
+    // 保存随行人员到历史
+    saveCompanionHistory(companion: {name: string, idCard: string, phone?: string}) {
+      if (!companion.name || !companion.idCard) return
+      try {
+        let history = wx.getStorageSync('companion_history') || []
+        // 去重（根据身份证号）
+        history = history.filter((item: any) => item.idCard !== companion.idCard)
+        // 添加到开头
+        history.unshift({
+          name: companion.name,
+          idCard: companion.idCard,
+          phone: companion.phone || ''
+        })
+        // 只保留最近10个
+        history = history.slice(0, 10)
+        wx.setStorageSync('companion_history', history)
+      } catch (e) {
+        console.error('保存随行人员历史失败:', e)
+      }
+    },
+    
+    // 从历史选择随行人员
+    selectCompanionFromHistory(e: any) {
+      const index = e.currentTarget.dataset.index as number
+      const companion = this.data.companionHistory[index]
+      if (companion) {
+        this.setData({
+          newCompanion: {
+            name: companion.name,
+            idCard: companion.idCard,
+            phone: companion.phone || ''
+          }
+        })
+        wx.showToast({ title: '已填充', icon: 'success' })
+      }
     },
     
     // 计算表单进度
@@ -921,8 +971,11 @@ Component({
         companions,
         newCompanion: { name: '', idCard: '', phone: '' }
       })
+      // 保存到历史
+      this.saveCompanionHistory({ name: name.trim(), idCard: idCard.trim(), phone: phone.trim() })
       // 自动保存草稿
       this.autoSaveDraft()
+      wx.showToast({ title: '添加成功', icon: 'success' })
     },
     removeCompanion(e: any) {
       const index = e.currentTarget.dataset.index as number
