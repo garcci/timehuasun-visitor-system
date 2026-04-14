@@ -297,29 +297,52 @@ Component({
       }
     },
     
-    // 隐藏选择器
+    // 隐藏选择器（带延迟，给tap事件时间触发）
     hidePickers() {
-      // 如果正在选择历史记录，延迟隐藏以让 tap 事件先触发
+      // 清除之前的定时器
+      if (this.data.blurTimer) {
+        clearTimeout(this.data.blurTimer)
+      }
+      
+      // 如果正在选择历史记录，不隐藏
       if (this.data.isSelectingHistory) return
       
+      // 延迟150ms隐藏，让tap事件先触发
       this.setData({
-        showPhonePicker: false,
-        showIdCardPicker: false
+        blurTimer: setTimeout(() => {
+          if (!this.data.isSelectingHistory) {
+            this.setData({
+              showPhonePicker: false,
+              showIdCardPicker: false,
+              blurTimer: null
+            })
+          }
+        }, 150)
       })
     },
     
-    // 阻止blur（点击历史记录时）
-    stopBlur() {
-      this.setData({ isSelectingHistory: true })
+    // 带延迟的blur（用于替换hidePickers）
+    onBlurWithDelay() {
+      this.hidePickers()
     },
     
     // 选择历史手机号
     selectPhone(e: any) {
       const phone = e.currentTarget.dataset.value as string
+      
+      // 标记正在选择
+      this.setData({ isSelectingHistory: true })
+      
+      // 清除blur定时器
+      if (this.data.blurTimer) {
+        clearTimeout(this.data.blurTimer)
+      }
+      
       this.setData({
         'form.phone': phone,
         showPhonePicker: false,
-        isSelectingHistory: false
+        isSelectingHistory: false,
+        blurTimer: null
       })
       this.autoSaveDraft()
     },
@@ -327,10 +350,20 @@ Component({
     // 选择历史身份证
     selectIdCard(e: any) {
       const idCard = e.currentTarget.dataset.value as string
+      
+      // 标记正在选择
+      this.setData({ isSelectingHistory: true })
+      
+      // 清除blur定时器
+      if (this.data.blurTimer) {
+        clearTimeout(this.data.blurTimer)
+      }
+      
       this.setData({
         'form.idCard': idCard,
         showIdCardPicker: false,
-        isSelectingHistory: false
+        isSelectingHistory: false,
+        blurTimer: null
       })
       this.autoSaveDraft()
     },

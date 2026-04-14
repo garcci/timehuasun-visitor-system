@@ -19,13 +19,11 @@
 
       <view class="field">
         <text class="field-lbl">联系电话 <text class="req">*</text></text>
-        <view class="input-with-picker" catchtouchstart="stopBlur">
-          <input class="field-inp" type="number" placeholder="请输入手机号码" placeholder-class="inp-ph"
-            value="{{form.phone}}" bindinput="onPhoneInput" bindfocus="onPhoneFocus" bindblur="hidePickers" maxlength="11" />
-        </view>
+        <input class="field-inp" type="number" placeholder="请输入手机号码" placeholder-class="inp-ph"
+          value="{{form.phone}}" bindinput="onPhoneInput" bindfocus="onPhoneFocus" bindblur="onBlurWithDelay" maxlength="11" />
         
         <!-- 历史手机号选择器 -->
-        <view wx:if="{{showPhonePicker && phoneHistory.length > 0}}" class="history-picker" catchtouchstart="stopBlur">
+        <view wx:if="{{showPhonePicker && phoneHistory.length > 0}}" class="history-picker">
           <view wx:for="{{phoneHistory}}" wx:key="index" 
                 class="history-item"
                 data-value="{{item}}"
@@ -50,13 +48,11 @@
 
       <view class="field">
         <text class="field-lbl">证件号码 <text class="req">*</text></text>
-        <view class="input-with-picker" catchtouchstart="stopBlur">
-          <input class="field-inp" type="idcard" placeholder="请输入证件号码" placeholder-class="inp-ph"
-            value="{{form.idCard}}" bindinput="onIdCardInput" bindfocus="onIdCardFocus" bindblur="hidePickers" />
-        </view>
+        <input class="field-inp" type="idcard" placeholder="请输入证件号码" placeholder-class="inp-ph"
+          value="{{form.idCard}}" bindinput="onIdCardInput" bindfocus="onIdCardFocus" bindblur="onBlurWithDelay" />
         
         <!-- 历史身份证选择器 -->
-        <view wx:if="{{showIdCardPicker && idCardHistory.length > 0}}" class="history-picker" catchtouchstart="stopBlur">
+        <view wx:if="{{showIdCardPicker && idCardHistory.length > 0}}" class="history-picker">
           <view wx:for="{{idCardHistory}}" wx:key="index" 
                 class="history-item"
                 data-value="{{item}}"
