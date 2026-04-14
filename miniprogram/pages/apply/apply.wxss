@@ -164,6 +164,62 @@ page {
 
 .req { color: #ef4444; }
 
+/* 输入框带清空按钮 */
+.input-with-clear {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-clear .field-inp {
+  padding-right: 60rpx;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 16rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40rpx;
+  height: 40rpx;
+  background: #d1d5db;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.clear-btn:active {
+  background: #9ca3af;
+}
+
+/* 错误抖动动画 */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4rpx); }
+  20%, 40%, 60%, 80% { transform: translateX(4rpx); }
+}
+
+.field.error {
+  animation: shake 0.4s ease-in-out;
+}
+
+.field.error .field-inp,
+.field.error .field-picker,
+.field.error .time-picker {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+/* 完成标记 */
+.field.completed .field-lbl::after {
+  content: ' ✓';
+  color: #10b981;
+}
+
 /* 输入框 */
 .field-inp {
   width: 100%;

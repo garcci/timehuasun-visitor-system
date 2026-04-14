@@ -736,6 +736,13 @@ Component({
       this.setData({ scrollIntoView: 'purpose-field' })
     },
     
+    // 清空字段
+    clearField(e: any) {
+      const field = e.currentTarget.dataset.field as string
+      this.setData({ [`form.${field}`]: '' })
+      this.autoSaveDraft()
+    },
+    
     /**
      * 聚焦到指定字段
      */
@@ -802,34 +809,42 @@ Component({
     validate(): boolean {
       const f = this.data.form
       const errors: Record<string, string> = {}
+      let firstErrorField = ''
 
-      if (!f.name.trim()) errors.name = '请输入来访人姓名'
+      if (!f.name.trim()) { errors.name = '请输入来访人姓名'; firstErrorField = firstErrorField || 'name-field' }
       if (!f.phone.trim()) {
         errors.phone = '请输入联系电话'
+        firstErrorField = firstErrorField || 'phone-field'
       } else if (!/^1\d{10}$/.test(f.phone)) {
         errors.phone = '手机号格式不正确'
+        firstErrorField = firstErrorField || 'phone-field'
       }
-      if (!f.idType) errors.idType = '请选择证件类型'
+      if (!f.idType) { errors.idType = '请选择证件类型'; firstErrorField = firstErrorField || 'idtype-field' }
       if (!f.idCard.trim()) {
         errors.idCard = '请输入证件号码'
+        firstErrorField = firstErrorField || 'idcard-field'
       } else if (!/^\d{17}[\dXx]$/.test(f.idCard)) {
         errors.idCard = '身份证号格式不正确'
+        firstErrorField = firstErrorField || 'idcard-field'
       }
-      if (!f.organization.trim()) errors.organization = '请输入来访单位'
-      if (!f.hostName.trim()) errors.hostName = '请输入被访人姓名'
+      if (!f.organization.trim()) { errors.organization = '请输入来访单位'; firstErrorField = firstErrorField || 'org-field' }
+      if (!f.hostName.trim()) { errors.hostName = '请输入被访人姓名'; firstErrorField = firstErrorField || 'host-field' }
       if (!f.hostPhone.trim()) {
         errors.hostPhone = '请输入被访人联系电话'
+        firstErrorField = firstErrorField || 'host-field'
       } else if (!/^1[3-9]\d{9}$/.test(f.hostPhone)) {
         errors.hostPhone = '手机号格式不正确'
+        firstErrorField = firstErrorField || 'host-field'
       }
       // 检查被访人是否验证通过
       if (!this.data.hostValidateSuccess && f.hostPhone.trim()) {
         errors.hostPhone = '请先验证被访人信息'
+        firstErrorField = firstErrorField || 'host-field'
       }
-      if (!f.visitDate) errors.visitDate = '请选择来访时间'
-      if (!f.purpose.trim()) errors.purpose = '请填写来访事由'
+      if (!f.visitDate) { errors.visitDate = '请选择来访时间'; firstErrorField = firstErrorField || 'time-field' }
+      if (!f.purpose.trim()) { errors.purpose = '请填写来访事由'; firstErrorField = firstErrorField || 'purpose-field' }
 
-      this.setData({ errors })
+      this.setData({ errors, scrollIntoView: firstErrorField })
       return Object.keys(errors).length === 0
     },
     async onSubmit() {

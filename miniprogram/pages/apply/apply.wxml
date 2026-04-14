@@ -10,17 +10,23 @@
       </view>
       <view class="divider"></view>
 
-      <view class="field">
+      <view class="field {{errors.name ? 'error' : ''}} {{form.name ? 'completed' : ''}}" id="name-field">
         <text class="field-lbl">来访人姓名 <text class="req">*</text></text>
-        <input class="field-inp" placeholder="请输入来访人姓名" placeholder-class="inp-ph"
-          value="{{form.name}}" data-field="name" bindinput="onInput" />
+        <view class="input-with-clear">
+          <input class="field-inp" placeholder="请输入来访人姓名" placeholder-class="inp-ph"
+            value="{{form.name}}" data-field="name" bindinput="onInput" confirm-type="next" />
+          <text wx:if="{{form.name}}" class="clear-btn" data-field="name" catchtap="clearField">✕</text>
+        </view>
         <text wx:if="{{errors.name}}" class="err">{{errors.name}}</text>
       </view>
 
-      <view class="field">
+      <view class="field {{errors.phone ? 'error' : ''}} {{form.phone ? 'completed' : ''}}" id="phone-field">
         <text class="field-lbl">联系电话 <text class="req">*</text></text>
-        <input class="field-inp" type="number" placeholder="请输入手机号码" placeholder-class="inp-ph"
-          value="{{form.phone}}" bindinput="onPhoneInput" bindfocus="onPhoneFocus" bindblur="onBlurWithDelay" maxlength="11" />
+        <view class="input-with-clear">
+          <input class="field-inp" type="number" placeholder="请输入手机号码" placeholder-class="inp-ph"
+            value="{{form.phone}}" bindinput="onPhoneInput" bindfocus="onPhoneFocus" bindblur="onBlurWithDelay" maxlength="11" confirm-type="next" />
+          <text wx:if="{{form.phone}}" class="clear-btn" data-field="phone" catchtap="clearField">✕</text>
+        </view>
         
         <!-- 历史手机号选择器 -->
         <view wx:if="{{showPhonePicker && phoneHistory.length > 0}}" class="history-picker">
@@ -35,7 +41,7 @@
         <text wx:if="{{errors.phone}}" class="err">{{errors.phone}}</text>
       </view>
 
-      <view class="field">
+      <view class="field {{errors.idType ? 'error' : ''}} {{form.idType ? 'completed' : ''}}" id="idtype-field">
         <text class="field-lbl">证件类型 <text class="req">*</text></text>
         <picker mode="selector" range="{{idTypeOptions}}" value="{{idTypeIndex}}" bindchange="onIdTypeChange">
           <view class="field-picker {{form.idType ? '' : 'picker-ph'}}">
@@ -46,10 +52,13 @@
         <text wx:if="{{errors.idType}}" class="err">{{errors.idType}}</text>
       </view>
 
-      <view class="field">
+      <view class="field {{errors.idCard ? 'error' : ''}} {{form.idCard ? 'completed' : ''}}" id="idcard-field">
         <text class="field-lbl">证件号码 <text class="req">*</text></text>
-        <input class="field-inp" type="idcard" placeholder="请输入证件号码" placeholder-class="inp-ph"
-          value="{{form.idCard}}" bindinput="onIdCardInput" bindfocus="onIdCardFocus" bindblur="onBlurWithDelay" />
+        <view class="input-with-clear">
+          <input class="field-inp" type="{{form.idType === '居民身份证' ? 'idcard' : 'text'}}" placeholder="请输入证件号码" placeholder-class="inp-ph"
+            value="{{form.idCard}}" bindinput="onIdCardInput" bindfocus="onIdCardFocus" bindblur="onBlurWithDelay" confirm-type="next" />
+          <text wx:if="{{form.idCard}}" class="clear-btn" data-field="idCard" catchtap="clearField">✕</text>
+        </view>
         
         <!-- 历史身份证选择器 -->
         <view wx:if="{{showIdCardPicker && idCardHistory.length > 0}}" class="history-picker">
@@ -64,17 +73,23 @@
         <text wx:if="{{errors.idCard}}" class="err">{{errors.idCard}}</text>
       </view>
 
-      <view class="field">
+      <view class="field {{errors.organization ? 'error' : ''}} {{form.organization ? 'completed' : ''}}" id="org-field">
         <text class="field-lbl">来访单位 <text class="req">*</text></text>
-        <input class="field-inp" placeholder="请输入所在单位" placeholder-class="inp-ph"
-          value="{{form.organization}}" data-field="organization" bindinput="onInput" />
+        <view class="input-with-clear">
+          <input class="field-inp" placeholder="请输入所在单位" placeholder-class="inp-ph"
+            value="{{form.organization}}" data-field="organization" bindinput="onInput" confirm-type="next" />
+          <text wx:if="{{form.organization}}" class="clear-btn" data-field="organization" catchtap="clearField">✕</text>
+        </view>
         <text wx:if="{{errors.organization}}" class="err">{{errors.organization}}</text>
       </view>
 
       <view class="field last">
         <text class="field-lbl">车牌号码</text>
-        <input class="field-inp" type="text" placeholder="请输入车牌号码（选填）" placeholder-class="inp-ph"
-          value="{{form.plateNumber}}" data-field="plateNumber" bindinput="onPlateInput" maxlength="8" />
+        <view class="input-with-clear">
+          <input class="field-inp" type="text" placeholder="请输入车牌号码（选填）" placeholder-class="inp-ph"
+            value="{{form.plateNumber}}" data-field="plateNumber" bindinput="onPlateInput" maxlength="8" confirm-type="done" />
+          <text wx:if="{{form.plateNumber}}" class="clear-btn" data-field="plateNumber" catchtap="clearField">✕</text>
+        </view>
         <text class="field-hint">示例：京A88888</text>
       </view>
     </view>
@@ -174,7 +189,7 @@
         </view>
       </view>
 
-      <view class="field">
+      <view class="field {{errors.hostPhone ? 'error' : ''}} {{hostValidateSuccess ? 'completed' : ''}}" id="host-field">
         <text class="field-lbl">被访人联系电话 <text class="req">*</text></text>
         <view class="input-with-icon">
           <input class="field-inp {{validatingHost ? 'validating' : ''}} {{hostValidateSuccess ? 'validated-success' : ''}}" 
@@ -199,7 +214,7 @@
         <text wx:if="{{errors.hostName}}" class="err">{{errors.hostName}}</text>
       </view>
 
-      <view class="field">
+      <view class="field {{errors.visitDate ? 'error' : ''}} {{form.visitDate ? 'completed' : ''}}" id="time-field">
         <text class="field-lbl">来访时间 <text class="req">*</text></text>
         <view class="time-row">
           <picker mode="date" value="{{form.visitDate}}" start="{{today}}" bindchange="onDateChange">
@@ -232,7 +247,7 @@
         </view>
       </view>
 
-      <view class="field" id="purpose-field">
+      <view class="field {{errors.purpose ? 'error' : ''}} {{form.purpose ? 'completed' : ''}}" id="purpose-field">
         <text class="field-lbl">来访事由 <text class="req">*</text></text>
         <textarea class="field-ta" placeholder="请简要说明来访目的" placeholder-class="inp-ph"
           value="{{form.purpose}}" data-field="purpose" bindinput="onInput" bindfocus="onPurposeFocus" auto-height />
