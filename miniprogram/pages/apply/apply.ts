@@ -55,6 +55,8 @@ Component({
     idCardHistory: [] as string[], // 历史身份证
     showPhonePicker: false, // 是否显示手机号选择器
     showIdCardPicker: false, // 是否显示身份证选择器
+    blurTimer: null as any, // blur延迟隐藏定时器
+    isSelectingHistory: false, // 是否正在选择历史记录
     // 常用被访人
     frequentHosts: [] as Array<{name: string, phone: string, loginName: string}>,
     showFrequentHosts: false, // 是否显示常用被访人
@@ -297,10 +299,18 @@ Component({
     
     // 隐藏选择器
     hidePickers() {
+      // 如果正在选择历史记录，延迟隐藏以让 tap 事件先触发
+      if (this.data.isSelectingHistory) return
+      
       this.setData({
         showPhonePicker: false,
         showIdCardPicker: false
       })
+    },
+    
+    // 阻止blur（点击历史记录时）
+    stopBlur() {
+      this.setData({ isSelectingHistory: true })
     },
     
     // 选择历史手机号
@@ -308,7 +318,8 @@ Component({
       const phone = e.currentTarget.dataset.value as string
       this.setData({
         'form.phone': phone,
-        showPhonePicker: false
+        showPhonePicker: false,
+        isSelectingHistory: false
       })
       this.autoSaveDraft()
     },
@@ -318,7 +329,8 @@ Component({
       const idCard = e.currentTarget.dataset.value as string
       this.setData({
         'form.idCard': idCard,
-        showIdCardPicker: false
+        showIdCardPicker: false,
+        isSelectingHistory: false
       })
       this.autoSaveDraft()
     },
