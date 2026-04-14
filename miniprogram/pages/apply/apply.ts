@@ -1043,10 +1043,27 @@ Component({
         // ✅ 提交成功后保存历史记录
         this.saveToHistory('phone', f.phone.trim())
         this.saveToHistory('idcard', f.idCard.trim())
-        console.log('✅ 已保存历史记录:', { phone: f.phone.trim(), idCard: f.idCard.trim() })
+        this.saveOrgHistory(f.organization.trim())
+        console.log('✅ 已保存历史记录:', { phone: f.phone.trim(), idCard: f.idCard.trim(), org: f.organization.trim() })
         
         // ✅ 提交成功后保存常用被访人
         this.saveFrequentHost(f.hostName.trim(), f.hostPhone.trim(), f.hostLoginName.trim())
+        
+        // ✅ 保存到本地申请列表（用于一键复制）
+        const newApp = {
+          name: f.name.trim(),
+          phone: f.phone.trim(),
+          idCard: f.idCard.trim(),
+          organization: f.organization.trim(),
+          plateNumber: f.plateNumber.trim(),
+          submitTime: new Date().toISOString()
+        }
+        let apps = wx.getStorageSync('applications') || []
+        apps.push(newApp)
+        // 只保留最近10条
+        if (apps.length > 10) apps = apps.slice(-10)
+        wx.setStorageSync('applications', apps)
+        console.log('✅ 已保存到申请列表')
         
         // 提交成功后清除草稿
         wx.removeStorageSync('visitor_draft')
