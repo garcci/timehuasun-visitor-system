@@ -51,6 +51,7 @@ Component({
     queryTimer: null as any, // 手机号查询防抖定时器
     isSubmitting: false, // 是否正在提交
     autoSaveTimer: null as any, // 自动保存草稿定时器
+    scrollIntoView: '', // 滚动到指定视图
     phoneHistory: [] as string[], // 历史手机号
     idCardHistory: [] as string[], // 历史身份证
     showPhonePicker: false, // 是否显示手机号选择器
@@ -728,6 +729,11 @@ Component({
           console.log('草稿已自动保存')
         }, 1000)
       })
+    },
+    
+    // 来访事由聚焦时，滚动到该字段
+    onPurposeFocus() {
+      this.setData({ scrollIntoView: 'purpose-field' })
     },
     
     /**

@@ -1,5 +1,5 @@
 <!--pages/apply/apply.wxml-->
-<scroll-view class="scroll" scroll-y>
+<scroll-view class="scroll" scroll-y scroll-into-view="{{scrollIntoView}}" scroll-with-animation>
   <view class="page">
 
     <!-- 来访人信息卡 -->
@@ -232,10 +232,10 @@
         </view>
       </view>
 
-      <view class="field">
+      <view class="field" id="purpose-field">
         <text class="field-lbl">来访事由 <text class="req">*</text></text>
         <textarea class="field-ta" placeholder="请简要说明来访目的" placeholder-class="inp-ph"
-          value="{{form.purpose}}" data-field="purpose" bindinput="onInput" auto-height />
+          value="{{form.purpose}}" data-field="purpose" bindinput="onInput" bindfocus="onPurposeFocus" auto-height />
         <text wx:if="{{errors.purpose}}" class="err">{{errors.purpose}}</text>
       </view>
     </view>
