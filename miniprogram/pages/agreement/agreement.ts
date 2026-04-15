@@ -8,63 +8,86 @@ Page({
     countdown: COUNTDOWN,
     canSign: false,
     signed: false,
-    COUNTDOWN,
     agreedPrivacy: false,
     agreedTerms: false,
     canSignAll: false,
-    shouldRedirect: false, // 标记是否需要跳转
+    progressWidth: 0,
+    btnClass: 'btn-sign-disabled',
+    btnText: '请阅读协议（5s）',
   },
 
   onLoad() {
-    // 检查是否已签署
-    const signed = isAgreementSigned()
-    this.setData({ shouldRedirect: signed })
-    
-    if (signed) {
-      // 延迟跳转，避免白屏
-      setTimeout(() => {
-        wx.reLaunch({ url: '/pages/apply/apply' })
-      }, 100)
+    if (isAgreementSigned()) {
+      wx.reLaunch({ url: '/pages/apply/apply' })
     }
   },
 
   onReady() {
-    // 不需要跳转时才启动倒计时
-    if (!this.data.shouldRedirect) {
-      this.startCountdown()
-    }
+    if (isAgreementSigned()) return
+    this.startCountdown()
   },
 
   startCountdown() {
     let count = COUNTDOWN
-    this.setData({ countdown: count, canSign: false })
+    this.updateProgress(count)
 
     const timer = setInterval(() => {
       count--
+      this.updateProgress(count)
+      
       if (count <= 0) {
         clearInterval(timer)
         this.setData({ canSign: true })
-        this.updateCanSignAll()
-      } else {
-        this.setData({ countdown: count })
+        this.updateBtnState()
       }
     }, 1000)
   },
 
-  updateCanSignAll() {
-    this.setData({
-      canSignAll: this.data.canSign && this.data.agreedPrivacy && this.data.agreedTerms
+  updateProgress(count: number) {
+    const width = ((COUNTDOWN - count) / COUNTDOWN) * 100
+    this.setData({ 
+      countdown: count,
+      progressWidth: width,
+      btnText: count > 0 ? `请阅读协议（${count}s）` : '请勾选同意隐私政策'
+    })
+  },
+
+  updateBtnState() {
+    const { canSign, agreedPrivacy, agreedTerms } = this.data
+    const canSignAll = canSign && agreedPrivacy && agreedTerms
+    
+    let btnClass = 'btn-sign-disabled'
+    let btnText = '请阅读协议（0s）'
+    
+    if (this.data.signed) {
+      btnClass = 'btn-signed'
+      btnText = '✓ 已签署'
+    } else if (canSignAll) {
+      btnClass = ''
+      btnText = '我已阅读，同意签署'
+    } else if (!canSign) {
+      btnText = `请阅读协议（${this.data.countdown}s）`
+    } else if (!agreedPrivacy) {
+      btnText = '请勾选同意隐私政策'
+    } else if (!agreedTerms) {
+      btnText = '请勾选同意用户协议'
+    }
+    
+    this.setData({ 
+      canSignAll,
+      btnClass,
+      btnText
     })
   },
 
   onPrivacyCheck(e: any) {
     this.setData({ agreedPrivacy: e.detail.value.length > 0 })
-    this.updateCanSignAll()
+    this.updateBtnState()
   },
 
   onTermsCheck(e: any) {
     this.setData({ agreedTerms: e.detail.value.length > 0 })
-    this.updateCanSignAll()
+    this.updateBtnState()
   },
 
   onViewPrivacy() {
@@ -77,13 +100,7 @@ Page({
 
   onSign() {
     if (!this.data.canSignAll) {
-      if (!this.data.canSign) {
-        wx.showToast({ title: `请阅读完协议（${this.data.countdown}s）`, icon: 'none' })
-      } else if (!this.data.agreedPrivacy) {
-        wx.showToast({ title: '请勾选同意隐私政策', icon: 'none' })
-      } else {
-        wx.showToast({ title: '请勾选同意用户协议', icon: 'none' })
-      }
+      wx.showToast({ title: this.data.btnText, icon: 'none' })
       return
     }
 

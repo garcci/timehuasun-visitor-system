@@ -3,21 +3,21 @@
   <scroll-view class="content-scroll" scroll-y>
     <view class="content">
       <view class="header-section">
-        <text class="agreement-title" user-select="true">外来人员入厂安全、保密告知书</text>
-        <text class="agreement-subtitle" user-select="true">株洲时代华鑫新材料技术股份有限公司</text>
+        <text class="agreement-title">外来人员入厂安全、保密告知书</text>
+        <text class="agreement-subtitle">株洲时代华鑫新材料技术股份有限公司</text>
         <view class="intro-card">
-          <text class="intro-text" user-select="true">您好：</text>
-          <text class="intro-text" user-select="true">欢迎您来到株洲时代华鑫新材料技术股份有限公司。</text>
-          <text class="intro-text highlight" user-select="true">为确保您在我司期间的安全和健康，在进入工厂前，敬请仔细阅读并遵守以下的安全、保密规定：</text>
+          <text class="intro-text">您好：</text>
+          <text class="intro-text">欢迎您来到株洲时代华鑫新材料技术股份有限公司。</text>
+          <text class="intro-text highlight">为确保您在我司期间的安全和健康，在进入工厂前，敬请仔细阅读并遵守以下的安全、保密规定：</text>
         </view>
       </view>
 
       <view class="section-card">
         <view class="section-header">
           <text class="section-number">一</text>
-          <text class="section-title-text" user-select="true">相关方人员进入厂区应注意事项</text>
+          <text class="section-title-text">相关方人员进入厂区应注意事项</text>
         </view>
-        <view class="section-body" user-select="true">
+        <view class="section-body">
           <view class="list-item">1. 我公司主要涉及以下几类危险源：物体打击、车辆伤害、机械伤害、起重吊装伤害、触电、高处坠落、中毒和窒息等；</view>
           <view class="list-item">2. 请全程佩戴我司门卫发给您的来宾出入证，并在陪同人员的带领下进入厂区，离开时，请将来宾出入证还给门卫；</view>
           <view class="list-item">3. 请服从接待人员及警卫的指挥，进入厂区请留意厂区设置的安全警示标识，遵守我司现场安全管理制度、指示、标识要求；</view>
@@ -33,9 +33,9 @@
       <view class="section-card">
         <view class="section-header">
           <text class="section-number">二</text>
-          <text class="section-title-text" user-select="true">进入车间生产作业场所注意事项</text>
+          <text class="section-title-text">进入车间生产作业场所注意事项</text>
         </view>
-        <view class="section-body" user-select="true">
+        <view class="section-body">
           <view class="list-item">1. 进入生产现场，请按要求佩戴个人劳动防护用品；</view>
           <view class="list-item">2. 应在公司陪同人员的带领下方可进入生产现场，按照指定路线行走，不得自行在生产区域内活动；</view>
           <view class="list-item">3. 在经过起重吊装作业区域时，严禁在吊物下方穿行及停留，待吊装结束后方可通过；</view>
@@ -48,9 +48,9 @@
       <view class="section-card special-card">
         <view class="section-header">
           <text class="section-number urgent">三</text>
-          <text class="section-title-text urgent" user-select="true">紧急情况处理</text>
+          <text class="section-title-text urgent">紧急情况处理</text>
         </view>
-        <view class="section-body urgent-body" user-select="true">
+        <view class="section-body urgent-body">
           如发现火灾、安全生产等意外事故时，请保护好您的自身安全，并第一时间告知您的接待人员，按照安全出口、疏散通道标识，以最快的速度疏散到安全地方。
         </view>
       </view>
@@ -58,9 +58,9 @@
       <view class="section-card">
         <view class="section-header">
           <text class="section-number">四</text>
-          <text class="section-title-text" user-select="true">保密要求</text>
+          <text class="section-title-text">保密要求</text>
         </view>
-        <view class="section-body" user-select="true">
+        <view class="section-body">
           <view class="list-item">1. 相关方人员入厂后请遵守我司保密管理规定，履行保密义务；</view>
           <view class="list-item">2. 未经许可，不得在我司内部摄像、拍照、录音、微信发朋友圈；</view>
           <view class="list-item">3. 禁止在互联网及其他公共信息网络或者未采取保密措施的有线和无线通信中传递我司信息，包括但不限于微信、微博、QQ、电子邮件平台等；</view>
@@ -76,12 +76,11 @@
         <text class="sign-text">本人已认真阅读上述告知书全部内容，理解并同意遵守以上所有条款。</text>
       </view>
       
-      <!-- 协议同意勾选 -->
       <view class="agreement-checks">
         <view class="check-item">
           <checkbox-group bindchange="onPrivacyCheck">
             <label class="check-label">
-              <checkbox class="checkbox" checked="{{agreedPrivacy}}" />
+              <checkbox checked="{{agreedPrivacy}}" />
               <text class="check-text">我已阅读并同意</text>
               <text class="check-link" bindtap="onViewPrivacy">《隐私政策》</text>
             </label>
@@ -90,7 +89,7 @@
         <view class="check-item">
           <checkbox-group bindchange="onTermsCheck">
             <label class="check-label">
-              <checkbox class="checkbox" checked="{{agreedTerms}}" />
+              <checkbox checked="{{agreedTerms}}" />
               <text class="check-text">我已阅读并同意</text>
               <text class="check-link" bindtap="onViewTerms">《用户服务协议》</text>
             </label>
@@ -102,17 +101,10 @@
 
   <view class="footer">
     <view class="progress-bar" wx:if="{{!canSign && !signed}}">
-      <view class="progress-fill" style="width: {{(COUNTDOWN - countdown) / COUNTDOWN * 100}}%"></view>
+      <view class="progress-fill" style="width: {{progressWidth}}%"></view>
     </view>
-    <button
-      class="btn-sign {{canSignAll ? '' : 'btn-sign-disabled'}} {{signed ? 'btn-signed' : ''}}"
-      bindtap="onSign"
-    >
-      <text wx:if="{{signed}}">✓ 已签署</text>
-      <text wx:elif="{{canSignAll}}">我已阅读，同意签署</text>
-      <text wx:elif="{{!canSign}}">请阅读协议（{{countdown}}s）</text>
-      <text wx:elif="{{!agreedPrivacy}}">请同意隐私政策</text>
-      <text wx:else>请同意用户协议</text>
+    <button class="btn-sign {{btnClass}}" bindtap="onSign">
+      {{btnText}}
     </button>
   </view>
 </view>
