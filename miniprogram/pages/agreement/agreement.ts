@@ -14,30 +14,68 @@ Page({
     canSignAll: false,
   },
 
+  onLoad() {
+    // 页面加载时检查是否已签署
+    if (isAgreementSigned()) {
+      wx.reLaunch({ url: '/pages/apply/apply' })
+      return
+    }
+  },
+
   onShow() {
     // 检查是否已签署过协议
     if (isAgreementSigned()) {
-      wx.redirectTo({ url: '/pages/apply/apply' })
       return
     }
-    this.startCountdown()
+    // 确保倒计时正常运行
+    if (!this.data.canSign && !this.data.signed && this.data.countdown === COUNTDOWN) {
+      this.startCountdown()
+    }
+  },
+
+  onReady() {
+    // 页面初次渲染完成后启动倒计时
+    if (!isAgreementSigned() && !this.data.signed && this.data.countdown === COUNTDOWN) {
+      this.startCountdown()
+    }
   },
 
   onHide() {
-    if ((this as any)._timer) clearInterval((this as any)._timer)
+    if ((this as any)._timer) {
+      clearInterval((this as any)._timer)
+      ;(this as any)._timer = null
+    }
   },
 
   onUnload() {
-    if ((this as any)._timer) clearInterval((this as any)._timer)
+    if ((this as any)._timer) {
+      clearInterval((this as any)._timer)
+      ;(this as any)._timer = null
+    }
   },
 
   startCountdown() {
-    this.setData({ countdown: COUNTDOWN, canSign: false, signed: false, canSignAll: false, agreedPrivacy: false, agreedTerms: false })
-    if ((this as any)._timer) clearInterval((this as any)._timer)
+    // 清理旧定时器
+    if ((this as any)._timer) {
+      clearInterval((this as any)._timer)
+      ;(this as any)._timer = null
+    }
+    
+    // 重置状态
+    this.setData({ 
+      countdown: COUNTDOWN, 
+      canSign: false, 
+      signed: false, 
+      canSignAll: false, 
+      agreedPrivacy: false, 
+      agreedTerms: false 
+    })
+    
     ;(this as any)._timer = setInterval(() => {
       const next = this.data.countdown - 1
       if (next <= 0) {
         clearInterval((this as any)._timer)
+        ;(this as any)._timer = null
         this.updateCanSignAll()
       } else {
         this.setData({ countdown: next })
@@ -53,16 +91,18 @@ Page({
   },
 
   onPrivacyCheck(e: any) {
+    const checked = e.detail.value.length > 0
     this.setData({
-      agreedPrivacy: e.detail.value.length > 0,
-      canSignAll: this.data.canSign && e.detail.value.length > 0 && this.data.agreedTerms
+      agreedPrivacy: checked,
+      canSignAll: this.data.canSign && checked && this.data.agreedTerms
     })
   },
 
   onTermsCheck(e: any) {
+    const checked = e.detail.value.length > 0
     this.setData({
-      agreedTerms: e.detail.value.length > 0,
-      canSignAll: this.data.canSign && this.data.agreedPrivacy && e.detail.value.length > 0
+      agreedTerms: checked,
+      canSignAll: this.data.canSign && this.data.agreedPrivacy && checked
     })
   },
 
@@ -89,11 +129,19 @@ Page({
       }
       return
     }
+    
+    // 清理定时器
+    if ((this as any)._timer) {
+      clearInterval((this as any)._timer)
+      ;(this as any)._timer = null
+    }
+    
     signAgreement()
     this.setData({ signed: true })
     wx.showToast({ title: '签署成功', icon: 'success', duration: 1200 })
+    
     setTimeout(() => {
-      wx.redirectTo({ url: '/pages/apply/apply?agreed=true' })
+      wx.reLaunch({ url: '/pages/apply/apply?agreed=true' })
     }, 1200)
   },
 })
