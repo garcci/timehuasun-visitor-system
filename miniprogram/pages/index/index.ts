@@ -15,7 +15,7 @@ Page({
   onApply() {
     console.log('onApply clicked, isAgreementSigned:', isAgreementSigned())
     if (isAgreementSigned()) {
-      wx.navigateTo({ url: '/pages/apply/apply' })
+      wx.navigateTo({ url: '/pages/apply/apply?agreed=true' })
     } else {
       wx.navigateTo({ url: '/pages/agreement/agreement' })
     }
