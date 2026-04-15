@@ -12,6 +12,7 @@ Page({
   },
 
   onApply() {
+    console.log('onApply clicked')
     if (isAgreementSigned()) {
       wx.navigateTo({ url: '/pages/apply/apply' })
     } else {
