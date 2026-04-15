@@ -73,13 +73,7 @@ Page({
 
   onLoad(options: any) {
     console.log('apply onLoad, options:', options)
-    // 每次都要签署保密协议（通过页面参数控制）
-    if (options?.from !== 'agreement') {
-      console.log('redirect to agreement')
-      wx.navigateTo({ url: '/pages/agreement/agreement' })
-      return
-    }
-    // 只有从协议页面跳转过来才执行初始化
+    // 直接初始化页面
     this.initPage()
   },
 

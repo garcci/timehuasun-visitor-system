@@ -20,7 +20,8 @@ Page({
   },
 
   onApply() {
-    wx.navigateTo({ url: '/pages/apply/apply' })
+    // 直接跳转保密协议页面，签署后再到申请页面
+    wx.navigateTo({ url: '/pages/agreement/agreement' })
   },
 
   onHistory() {

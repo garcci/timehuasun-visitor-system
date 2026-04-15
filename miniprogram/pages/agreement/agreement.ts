@@ -58,7 +58,7 @@ Page({
     wx.showToast({ title: '签署成功', icon: 'success', duration: 1200 })
 
     setTimeout(() => {
-      wx.reLaunch({ url: '/pages/apply/apply?from=agreement' })
+      wx.navigateTo({ url: '/pages/apply/apply' })
     }, 1200)
   },
 })
