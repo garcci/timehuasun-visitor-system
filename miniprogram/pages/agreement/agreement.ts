@@ -15,6 +15,7 @@ Page({
   },
 
   _timer: null as number | null,
+  _isCountdownStarted: false,
 
   onLoad() {
     // 已签署直接跳转
@@ -22,26 +23,22 @@ Page({
       wx.reLaunch({ url: '/pages/apply/apply' })
       return
     }
-    // 初始化状态
     this.resetState()
   },
 
   onShow() {
-    // 已签署不处理
     if (isAgreementSigned()) return
     
-    // 首次进入或未启动倒计时时启动（倒计时进行中或已结束都不重启）
-    if (!this._timer && !this.data.signed && this.data.countdown === COUNTDOWN) {
+    // 只启动一次倒计时
+    if (!this._isCountdownStarted && !this.data.signed) {
+      this._isCountdownStarted = true
       this.startCountdown()
     }
   },
 
-  onHide() {
-    this.clearTimer()
-  },
-
   onUnload() {
     this.clearTimer()
+    this._isCountdownStarted = false
   },
 
   clearTimer() {
@@ -52,6 +49,7 @@ Page({
   },
 
   resetState() {
+    this._isCountdownStarted = false
     this.setData({
       countdown: COUNTDOWN,
       canSign: false,
@@ -64,7 +62,6 @@ Page({
 
   startCountdown() {
     this.clearTimer()
-    this.resetState()
     
     this._timer = setInterval(() => {
       const next = this.data.countdown - 1
