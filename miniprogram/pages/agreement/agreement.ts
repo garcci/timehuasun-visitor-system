@@ -12,18 +12,27 @@ Page({
     agreedPrivacy: false,
     agreedTerms: false,
     canSignAll: false,
+    shouldRedirect: false, // 标记是否需要跳转
   },
 
   onLoad() {
-    if (isAgreementSigned()) {
-      wx.reLaunch({ url: '/pages/apply/apply' })
-      return
+    // 检查是否已签署
+    const signed = isAgreementSigned()
+    this.setData({ shouldRedirect: signed })
+    
+    if (signed) {
+      // 延迟跳转，避免白屏
+      setTimeout(() => {
+        wx.reLaunch({ url: '/pages/apply/apply' })
+      }, 100)
     }
   },
 
   onReady() {
-    if (isAgreementSigned()) return
-    this.startCountdown()
+    // 不需要跳转时才启动倒计时
+    if (!this.data.shouldRedirect) {
+      this.startCountdown()
+    }
   },
 
   startCountdown() {
