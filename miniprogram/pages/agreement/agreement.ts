@@ -30,8 +30,8 @@ Page({
     // 已签署不处理
     if (isAgreementSigned()) return
     
-    // 未启动倒计时时启动
-    if (!this.data.canSign && !this._timer && !this.data.signed) {
+    // 首次进入或未启动倒计时时启动（倒计时进行中或已结束都不重启）
+    if (!this._timer && !this.data.signed && this.data.countdown === COUNTDOWN) {
       this.startCountdown()
     }
   },
