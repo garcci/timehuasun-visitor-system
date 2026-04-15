@@ -6,7 +6,7 @@
 }
 
 .header {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   padding: 40rpx 32rpx;
   text-align: center;
 }
