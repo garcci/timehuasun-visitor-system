@@ -11,7 +11,16 @@ Page({
     btnText: '请阅读协议（5s）',
   },
 
+  onLoad() {
+    console.log('agreement onLoad')
+  },
+
+  onShow() {
+    console.log('agreement onShow')
+  },
+
   onReady() {
+    console.log('agreement onReady')
     this.startCountdown()
   },
 
