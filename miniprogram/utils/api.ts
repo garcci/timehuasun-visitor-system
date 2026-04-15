@@ -1,6 +1,33 @@
 // utils/api.ts — 真实后端 API 接口
 import { showError, retryRequest } from './error-handler'
 
+// ==================== HarmonyOS 适配 ====================
+/**
+ * 判断是否为纯血鸿蒙系统
+ * 注意：微信开发者工具中 platform 为 devtools，需判断 system == 'HarmonyOS'
+ */
+export function isHarmonyOS(): boolean {
+  const deviceInfo = (wx as any).getDeviceInfo()
+  // 真机环境
+  if (deviceInfo.platform === 'ohos') return true
+  // 开发者工具模拟鸿蒙
+  if (deviceInfo.system?.includes('HarmonyOS')) return true
+  return false
+}
+
+/**
+ * 获取平台信息（用于针对不同平台做适配）
+ */
+export function getPlatform(): { platform: string; isHarmony: boolean; isDevTools: boolean } {
+  const deviceInfo = (wx as any).getDeviceInfo()
+  const isHarmony = isHarmonyOS()
+  return {
+    platform: deviceInfo.platform,
+    isHarmony,
+    isDevTools: deviceInfo.platform === 'devtools'
+  }
+}
+
 // ==================== 配置区域 ====================
 // 选择环境配置（取消注释需要使用的配置）
 

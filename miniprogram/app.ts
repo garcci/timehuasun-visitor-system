@@ -1,13 +1,24 @@
 // app.ts
 import { initErrorHandler } from './utils/error-handler'
 import { initNetworkMonitor } from './utils/network'
+import { isHarmonyOS, getPlatform } from './utils/api'
 
 App<IAppOption>({
   globalData: {
     isConnected: true,
     networkType: 'unknown',
+    isHarmony: false,
+    platform: '',
   },
   onLaunch() {
+    // 检测平台
+    const platform = getPlatform()
+    ;(this.globalData as any).isHarmony = platform.isHarmony
+    ;(this.globalData as any).platform = platform.platform
+    if (platform.isHarmony) {
+      console.log('🚀 运行在 HarmonyOS 平台')
+    }
+    
     // 初始化全局错误处理
     initErrorHandler()
     
