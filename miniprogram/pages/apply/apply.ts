@@ -78,6 +78,15 @@ Component({
         return
       }
       
+      // 每次都要签署保密协议（通过页面参数控制）
+      const pages = getCurrentPages()
+      const page = pages[pages.length - 1]
+      const fromAgreement = (page as any).options?.from === 'agreement'
+      if (!fromAgreement) {
+        wx.redirectTo({ url: '/pages/agreement/agreement' })
+        return
+      }
+      
       // 获取当前日期和时间
       const now = new Date()
       const year = now.getFullYear()
