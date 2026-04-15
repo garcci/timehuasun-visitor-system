@@ -1,35 +1,66 @@
 // pages/index/index.ts
-import { getApplications } from '../../utils/api'
+import { getApplications, isPrivacyAgreed, agreePrivacy, isTermsAgreed, agreeTerms } from '../../utils/api'
 
 Page({
   data: {
     pendingCount: 0,
+    showAgreementModal: false,
+    agreedPrivacy: false,
+    agreedTerms: false,
   },
 
   onShow() {
-    console.log('index onShow')
     const apps = getApplications()
     this.setData({ pendingCount: apps.filter((a: any) => a.status === 'pending').length })
+    
+    // 检查是否已同意协议
+    if (!isPrivacyAgreed() || !isTermsAgreed()) {
+      this.setData({ showAgreementModal: true })
+    }
   },
 
   onApply() {
-    console.log('onApply clicked')
-    // 直接跳转申请页面，保密协议在申请页面检查
     wx.navigateTo({ url: '/pages/apply/apply' })
   },
 
   onHistory() {
-    console.log('onHistory clicked')
     wx.navigateTo({ url: '/pages/history/history' })
   },
 
   onTerms() {
-    console.log('onTerms clicked')
     wx.navigateTo({ url: '/pages/terms/terms' })
   },
 
   onPrivacy() {
-    console.log('onPrivacy clicked')
     wx.navigateTo({ url: '/pages/privacy/privacy' })
+  },
+
+  // 协议弹窗相关
+  onPrivacyCheck(e: any) {
+    this.setData({ agreedPrivacy: e.detail.value.length > 0 })
+  },
+
+  onTermsCheck(e: any) {
+    this.setData({ agreedTerms: e.detail.value.length > 0 })
+  },
+
+  onViewPrivacy() {
+    wx.navigateTo({ url: '/pages/privacy/privacy' })
+  },
+
+  onViewTerms() {
+    wx.navigateTo({ url: '/pages/terms/terms' })
+  },
+
+  onAgree() {
+    const { agreedPrivacy, agreedTerms } = this.data
+    if (!agreedPrivacy || !agreedTerms) {
+      wx.showToast({ title: '请阅读并同意协议', icon: 'none' })
+      return
+    }
+    agreePrivacy()
+    agreeTerms()
+    this.setData({ showAgreementModal: false })
+    wx.showToast({ title: '已同意', icon: 'success', duration: 1200 })
   },
 })

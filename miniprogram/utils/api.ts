@@ -200,6 +200,7 @@ async function request<T>(url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE'
 const APP_KEY = 'visitor_applications'
 const DRAFT_KEY = 'visitor_draft'
 const PRIVACY_KEY = 'visitor_privacy_agreed'
+const TERMS_KEY = 'visitor_terms_agreed'
 
 // 隐私政策只需同意一次
 export function isPrivacyAgreed(): boolean {
@@ -208,6 +209,15 @@ export function isPrivacyAgreed(): boolean {
 
 export function agreePrivacy(): void {
   wx.setStorageSync(PRIVACY_KEY, true)
+}
+
+// 用户服务协议只需同意一次
+export function isTermsAgreed(): boolean {
+  return wx.getStorageSync(TERMS_KEY) === true
+}
+
+export function agreeTerms(): void {
+  wx.setStorageSync(TERMS_KEY, true)
 }
 
 // 保密协议每次都要签署（不缓存）

@@ -1,7 +1,6 @@
 // app.ts
 import { initErrorHandler } from './utils/error-handler'
 import { initNetworkMonitor } from './utils/network'
-import { isPrivacyAgreed } from './utils/api'
 
 App<IAppOption>({
   globalData: {
@@ -37,12 +36,5 @@ App<IAppOption>({
         }
       })
     }
-    
-    // 检查隐私政策是否已同意
-    setTimeout(() => {
-      if (!isPrivacyAgreed()) {
-        wx.navigateTo({ url: '/pages/privacy/privacy' })
-      }
-    }, 500)
   },
 })

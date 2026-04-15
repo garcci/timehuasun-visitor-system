@@ -20,3 +20,41 @@
     <text class="link" bindtap="onPrivacy">《隐私政策》</text>
   </view>
 </view>
+
+<!-- 协议同意弹窗 -->
+<view class="agreement-modal" wx:if="{{showAgreementModal}}">
+  <view class="modal-mask" bindtap="onAgree"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">服务协议与隐私政策</text>
+    </view>
+    <view class="modal-body">
+      <text class="modal-desc">欢迎使用访客管理系统，在使用前请您仔细阅读并同意以下协议：</text>
+      <view class="check-list">
+        <view class="check-item">
+          <checkbox-group bindchange="onPrivacyCheck">
+            <label class="check-label">
+              <checkbox checked="{{agreedPrivacy}}" />
+              <text class="check-text">我已阅读并同意</text>
+              <text class="check-link" bindtap="onViewPrivacy">《隐私政策》</text>
+            </label>
+          </checkbox-group>
+        </view>
+        <view class="check-item">
+          <checkbox-group bindchange="onTermsCheck">
+            <label class="check-label">
+              <checkbox checked="{{agreedTerms}}" />
+              <text class="check-text">我已阅读并同意</text>
+              <text class="check-link" bindtap="onViewTerms">《用户服务协议》</text>
+            </label>
+          </checkbox-group>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn-agree {{agreedPrivacy && agreedTerms ? '' : 'disabled'}}" bindtap="onAgree">
+        同意并继续
+      </button>
+    </view>
+  </view>
+</view>
