@@ -1,5 +1,5 @@
 // pages/index/index.ts
-import { isAgreementSigned, getApplications } from '../../utils/api'
+import { isPrivacyAgreed, getApplications } from '../../utils/api'
 
 Page({
   data: {
@@ -13,12 +13,9 @@ Page({
   },
 
   onApply() {
-    console.log('onApply clicked, isAgreementSigned:', isAgreementSigned())
-    if (isAgreementSigned()) {
-      wx.navigateTo({ url: '/pages/apply/apply?agreed=true' })
-    } else {
-      wx.navigateTo({ url: '/pages/agreement/agreement' })
-    }
+    console.log('onApply clicked, isPrivacyAgreed:', isPrivacyAgreed())
+    // 隐私政策已同意则直接跳转申请页面（保密协议在申请页面签署）
+    wx.navigateTo({ url: '/pages/apply/apply' })
   },
 
   onHistory() {

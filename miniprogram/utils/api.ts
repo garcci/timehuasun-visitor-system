@@ -199,14 +199,24 @@ async function request<T>(url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 const APP_KEY = 'visitor_applications'
 const DRAFT_KEY = 'visitor_draft'
-const AGREEMENT_KEY = 'visitor_agreement_signed'
+const PRIVACY_KEY = 'visitor_privacy_agreed'
 
+// 隐私政策只需同意一次
+export function isPrivacyAgreed(): boolean {
+  return wx.getStorageSync(PRIVACY_KEY) === true
+}
+
+export function agreePrivacy(): void {
+  wx.setStorageSync(PRIVACY_KEY, true)
+}
+
+// 保密协议每次都要签署（不缓存）
 export function isAgreementSigned(): boolean {
-  return wx.getStorageSync(AGREEMENT_KEY) === true
+  return false // 每次填写前都要重新签署
 }
 
 export function signAgreement(): void {
-  wx.setStorageSync(AGREEMENT_KEY, true)
+  // 不缓存签署状态，每次都要重新签署
 }
 
 /**

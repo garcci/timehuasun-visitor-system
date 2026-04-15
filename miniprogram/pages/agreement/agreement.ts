@@ -1,5 +1,5 @@
 // pages/agreement/agreement.ts
-import { signAgreement, isAgreementSigned } from '../../utils/api'
+import { signAgreement, isAgreementSigned, agreePrivacy, isPrivacyAgreed } from '../../utils/api'
 
 const COUNTDOWN = 5
 
@@ -21,17 +21,13 @@ Page({
   },
 
   onShow() {
-    // 页面显示时检查，已签署则跳转
-    if (isAgreementSigned()) {
-      wx.reLaunch({ url: '/pages/apply/apply' })
-    }
+    // 保密协议每次都要签署，不跳转
+    // 只检查倒计时是否正常
   },
 
   onReady() {
-    // 未签署才启动倒计时
-    if (!isAgreementSigned()) {
-      this.startCountdown()
-    }
+    // 启动倒计时
+    this.startCountdown()
   },
 
   startCountdown() {
@@ -88,7 +84,12 @@ Page({
   },
 
   onPrivacyCheck(e: any) {
-    this.setData({ agreedPrivacy: e.detail.value.length > 0 })
+    const checked = e.detail.value.length > 0
+    this.setData({ agreedPrivacy: checked })
+    // 隐私政策同意时缓存
+    if (checked) {
+      agreePrivacy()
+    }
     this.updateBtnState()
   },
 
