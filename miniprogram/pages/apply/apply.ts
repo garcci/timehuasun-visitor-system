@@ -72,9 +72,11 @@ Page({
   },
 
   onLoad(options: any) {
+    console.log('apply onLoad, options:', options)
     // 每次都要签署保密协议（通过页面参数控制）
     if (options?.from !== 'agreement') {
-      wx.redirectTo({ url: '/pages/agreement/agreement' })
+      console.log('redirect to agreement')
+      wx.reLaunch({ url: '/pages/agreement/agreement' })
     }
   },
   onShow() {
