@@ -80,7 +80,7 @@
       <text class="section-title">八、联系我们</text>
       <text class="text">如有疑问或建议，请联系公司安保部门：</text>
       <view class="info-card contact">
-        <text class="info-item">联系部门：公司安保部门</text>
+        <text class="info-item">联系人：系统管理员</text>
         <text class="info-item">联系电话：18684556888</text>
       </view>
     </view>
