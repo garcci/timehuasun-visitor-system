@@ -76,7 +76,7 @@ Page({
     // 每次都要签署保密协议（通过页面参数控制）
     if (options?.from !== 'agreement') {
       console.log('redirect to agreement')
-      wx.reLaunch({ url: '/pages/agreement/agreement' })
+      wx.navigateTo({ url: '/pages/agreement/agreement' })
       return
     }
     // 只有从协议页面跳转过来才执行初始化
