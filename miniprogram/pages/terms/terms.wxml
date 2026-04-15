@@ -2,58 +2,94 @@
 <view class="container">
   <view class="header">
     <text class="title">用户服务协议</text>
-    <text class="subtitle">株洲时代华鑫新材料技术有限公司</text>
+    <text class="subtitle">株洲时代华鑫新材料技术股份有限公司</text>
   </view>
   
   <scroll-view class="content" scroll-y>
     <view class="section">
       <text class="section-title">一、协议范围</text>
-      <text class="text">本协议是您（访客）与株洲时代华鑫新材料技术有限公司（以下简称"公司"）之间关于使用本公司访客管理系统小程序（以下简称"本小程序"）所订立的协议。</text>
+      <text class="text">本协议是您（访客）与株洲时代华鑫新材料技术股份有限公司（以下简称"公司"）之间关于使用本公司访客管理系统小程序（以下简称"本小程序"）所订立的协议。</text>
+      <text class="text warning">请您仔细阅读本协议，确认充分理解并同意后使用本小程序。</text>
     </view>
     
     <view class="section">
       <text class="section-title">二、服务内容</text>
       <text class="text">本小程序提供以下服务：</text>
-      <text class="text">1. 访客在线申请入厂访问；</text>
-      <text class="text">2. 访客信息填写与提交；</text>
-      <text class="text">3. 访问申请状态查询；</text>
-      <text class="text">4. 访问记录查询。</text>
+      <view class="info-card">
+        <text class="info-item">1. 访客在线申请入厂访问</text>
+        <text class="info-item">2. 访客信息填写与提交</text>
+        <text class="info-item">3. 访问申请状态查询</text>
+        <text class="info-item">4. 访问记录查询</text>
+      </view>
     </view>
     
     <view class="section">
       <text class="section-title">三、用户信息收集与使用</text>
-      <text class="text">为提供访客服务，我们需要收集以下信息：</text>
-      <text class="text">1. 基本信息：姓名、手机号码、身份证号码；</text>
-      <text class="text">2. 访问信息：访问日期、时间、被访人信息、访问事由；</text>
-      <text class="text">3. 其他信息：来访单位、车牌号码（如有）。</text>
+      <text class="text">为提供访客服务，我们需要在获取您的明示同意后，收集以下信息：</text>
+      <view class="info-card">
+        <text class="info-item">• 基本信息：姓名、手机号码、身份证号码</text>
+        <text class="info-item">• 访问信息：访问日期、时间、被访人信息、访问事由</text>
+        <text class="info-item">• 其他信息：来访单位、车牌号码（如有）</text>
+      </view>
       <text class="text">上述信息仅用于：</text>
-      <text class="text">1. 访客身份核验与安全管理；</text>
-      <text class="text">2. 访问申请审批流程；</text>
-      <text class="text">3. 公司安全管理与记录保存。</text>
+      <view class="info-card">
+        <text class="info-item">1. 访客身份核验与安全管理</text>
+        <text class="info-item">2. 访问申请审批流程</text>
+        <text class="info-item">3. 公司安全管理与记录保存</text>
+      </view>
+      <text class="text">详细信息请查阅《隐私政策》。</text>
     </view>
     
     <view class="section">
       <text class="section-title">四、用户义务</text>
-      <text class="text">1. 您应保证所填写的信息真实、准确、完整；</text>
-      <text class="text">2. 您应遵守公司相关安全管理规定；</text>
-      <text class="text">3. 您不得利用本小程序从事违法违规活动；</text>
-      <text class="text">4. 您应妥善保管个人账号信息。</text>
+      <view class="info-card">
+        <text class="info-item">1. 您应保证所填写的信息真实、准确、完整</text>
+        <text class="info-item">2. 您应遵守公司相关安全管理规定</text>
+        <text class="info-item">3. 您不得利用本小程序从事违法违规活动</text>
+        <text class="info-item">4. 您应妥善保管个人账号信息</text>
+        <text class="info-item">5. 您应在授权范围内使用访问权限</text>
+      </view>
+      <text class="text warning">如因您提供虚假信息或违反规定导致任何后果，由您自行承担法律责任。</text>
     </view>
     
     <view class="section">
-      <text class="section-title">五、免责声明</text>
-      <text class="text">1. 因不可抗力导致的服务中断，公司不承担责任；</text>
-      <text class="text">2. 因用户提供虚假信息导致的后果，由用户自行承担；</text>
-      <text class="text">3. 公司保留随时修改本协议的权利。</text>
+      <text class="section-title">五、服务变更与中断</text>
+      <text class="text">（一）服务变更</text>
+      <text class="text">公司保留随时修改本协议的权利。修改后的协议将在小程序内公布，继续使用本服务即视为接受修改后的协议。</text>
+      <text class="text">（二）服务中断</text>
+      <text class="text">以下情形导致的服务中断或数据丢失，公司不承担责任：</text>
+      <view class="info-card">
+        <text class="info-item">• 不可抗力（如自然灾害、战争等）</text>
+        <text class="info-item">• 基础通信运营商或电力供应问题</text>
+        <text class="info-item">• 黑客攻击或计算机病毒</text>
+        <text class="info-item">• 用户操作不当</text>
+      </view>
     </view>
     
     <view class="section">
-      <text class="section-title">六、联系方式</text>
-      <text class="text">如有疑问，请联系公司安保部门。</text>
+      <text class="section-title">六、知识产权</text>
+      <text class="text">本小程序的所有内容（包括但不限于文字、图片、图形、音频、视频、软件、程序、代码、用户界面等）的知识产权归公司所有。未经授权，任何人不得擅自使用、复制、修改或传播。</text>
     </view>
     
-    <view class="footer">
-      <text class="date">更新日期：2024年</text>
+    <view class="section">
+      <text class="section-title">七、争议解决</text>
+      <text class="text">本协议的解释、效力及纠纷的解决，适用中华人民共和国法律。若双方发生争议，应友好协商解决；协商不成的，任何一方均可向公司所在地人民法院提起诉讼。</text>
+    </view>
+    
+    <view class="section">
+      <text class="section-title">八、联系我们</text>
+      <text class="text">如有疑问或建议，请联系公司安保部门：</text>
+      <view class="info-card contact">
+        <text class="info-item">联系部门：公司安保部门</text>
+        <text class="info-item">联系电话：0731-xxxxxxx（请填写实际电话）</text>
+        <text class="info-item">联系邮箱：xxxx@timehuasun.com（请填写实际邮箱）</text>
+      </view>
+    </view>
+    
+    <view class="section">
+      <text class="section-title">九、协议生效</text>
+      <text class="text highlight">更新日期：2026年04月15日</text>
+      <text class="text highlight">生效日期：2026年04月15日</text>
     </view>
   </scroll-view>
 </view>

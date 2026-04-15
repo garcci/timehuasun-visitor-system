@@ -2,80 +2,116 @@
 <view class="container">
   <view class="header">
     <text class="title">隐私政策</text>
-    <text class="subtitle">株洲时代华鑫新材料技术有限公司</text>
+    <text class="subtitle">株洲时代华鑫新材料技术股份有限公司</text>
   </view>
   
   <scroll-view class="content" scroll-y>
     <view class="section">
       <text class="section-title">引言</text>
-      <text class="text">株洲时代华鑫新材料技术有限公司（以下简称"我们"）深知个人信息对您的重要性，我们将按照法律法规的规定保护您的个人信息及隐私安全。本隐私政策旨在帮助您了解我们如何收集、使用、存储和保护您的个人信息。</text>
+      <text class="text">株洲时代华鑫新材料技术股份有限公司（以下简称"我们"）深知个人信息对您的重要性，我们将按照法律法规的规定保护您的个人信息及隐私安全。本隐私政策旨在帮助您了解我们如何收集、使用、存储和保护您的个人信息。</text>
+      <text class="text warning">请您仔细阅读本政策，确认充分理解并同意后使用本小程序。</text>
     </view>
     
     <view class="section">
       <text class="section-title">一、我们收集的信息</text>
-      <text class="text">为提供访客管理服务，我们会收集以下信息：</text>
-      <text class="text highlight">1. 您主动提供的信息：</text>
-      <text class="text">• 姓名、手机号码、身份证号码</text>
-      <text class="text">• 来访单位、访问日期和时间</text>
-      <text class="text">• 被访人信息、访问事由</text>
-      <text class="text">• 车牌号码（如有）</text>
-      <text class="text highlight">2. 我们自动收集的信息：</text>
-      <text class="text">• 设备信息：设备型号、操作系统版本</text>
-      <text class="text">• 网络信息：IP地址、网络类型</text>
-      <text class="text">• 使用记录：访问时间、操作日志</text>
+      <text class="text">为提供访客管理服务，我们会在获取您的明示同意后，收集以下信息：</text>
+      <text class="text highlight">（一）您主动提供的信息</text>
+      <view class="info-card">
+        <text class="info-item">• 手机号码：用于访客身份验证、联系被访人和紧急联系</text>
+        <text class="info-item">• 身份证号码：用于实名登记、安全管控和门禁系统对接</text>
+        <text class="info-item">• 车牌号码：用于车辆出入管理和停车场管控（如有）</text>
+        <text class="info-item">• 姓名、来访单位、被访人信息、访问事由</text>
+      </view>
+      <text class="text highlight">（二）我们自动收集的信息</text>
+      <view class="info-card">
+        <text class="info-item">• 设备信息：设备型号、操作系统版本</text>
+        <text class="info-item">• 网络信息：IP地址、网络类型</text>
+        <text class="info-item">• 使用记录：访问时间、操作日志</text>
+      </view>
     </view>
     
     <view class="section">
       <text class="section-title">二、信息使用目的</text>
-      <text class="text">我们收集的信息将用于：</text>
-      <text class="text">1. 访客身份核验与安全管理；</text>
-      <text class="text">2. 访问申请审批流程处理；</text>
-      <text class="text">3. 与公司OA系统集成进行审批；</text>
-      <text class="text">4. 访客记录保存与查询；</text>
-      <text class="text">5. 提升服务质量和用户体验；</text>
-      <text class="text">6. 符合法律法规要求的安全管理。</text>
+      <text class="text">我们收集的信息将用于以下目的：</text>
+      <view class="info-card">
+        <text class="info-item">1. 访客身份核验与安全管理</text>
+        <text class="info-item">2. 访问申请审批流程处理</text>
+        <text class="info-item">3. 与公司OA系统集成进行审批</text>
+        <text class="info-item">4. 访客记录保存与查询</text>
+        <text class="info-item">5. 提升服务质量和用户体验</text>
+        <text class="info-item">6. 符合法律法规要求的安全管理</text>
+      </view>
+      <text class="text warning">如我们使用您的信息超出本政策目的或合理范围，我们将再次告知并征得您的明示同意。</text>
     </view>
     
     <view class="section">
       <text class="section-title">三、信息存储与保护</text>
-      <text class="text">1. 存储地点：您的个人信息存储在中国境内的服务器；</text>
-      <text class="text">2. 存储期限：根据您的访问记录保存需要，在法定期限内保存；</text>
-      <text class="text">3. 安全措施：我们采用加密传输、访问控制等技术手段保护您的信息安全；</text>
-      <text class="text">4. 权限管理：仅授权人员可访问您的个人信息。</text>
+      <text class="text">（一）存储地点</text>
+      <text class="text">您的个人信息存储在中国境内的服务器。</text>
+      <text class="text">（二）存储期限</text>
+      <text class="text highlight">固定存储期限：90天</text>
+      <text class="text">访问结束后，您的个人信息将保留90天。除法律法规另有规定外，保存期限为实现处理目的所必要的最短时间。</text>
+      <text class="text">（三）安全措施</text>
+      <view class="info-card">
+        <text class="info-item">• 采用加密传输技术（HTTPS）保护数据传输安全</text>
+        <text class="info-item">• 实施访问控制，仅授权人员可访问个人信息</text>
+        <text class="info-item">• 定期进行安全评估和风险排查</text>
+      </view>
     </view>
     
     <view class="section">
       <text class="section-title">四、信息共享与披露</text>
-      <text class="text">1. 我们不会向第三方出售、出租或交易您的个人信息；</text>
-      <text class="text">2. 为完成审批流程，您的信息可能会在公司内部OA系统中流转；</text>
-      <text class="text">3. 根据法律法规要求，或为保护公司合法权益时，我们可能会披露您的信息。</text>
+      <text class="text highlight">我们承诺：</text>
+      <view class="info-card">
+        <text class="info-item">• 不会主动共享或转让您的信息至任何第三方</text>
+        <text class="info-item">• 不会对外公开披露您的信息</text>
+        <text class="info-item">• 为完成审批流程，信息可能在公司内部OA系统中流转</text>
+      </view>
+      <text class="text">如存在确需共享或转让的情形，我们将直接征得或确认第三方征得您的单独同意。如必须公开披露，我们将告知您披露目的、信息类型，并征得您的单独同意。</text>
     </view>
     
     <view class="section">
-      <text class="section-title">五、您的权利</text>
-      <text class="text">1. 访问权：您有权查询您的个人信息；</text>
-      <text class="text">2. 更正权：您发现信息有误时，可要求更正；</text>
-      <text class="text">3. 删除权：访问结束后，您可申请删除个人信息；</text>
-      <text class="text">4. 撤回同意：您可通过停止使用本小程序撤回授权。</text>
+      <text class="section-title">五、第三方插件/SDK</text>
+      <text class="text">本小程序目前未接入任何第三方插件或SDK。</text>
+      <text class="text">如未来接入第三方插件/SDK，我们将另行告知并说明其个人信息处理规则。</text>
     </view>
     
     <view class="section">
-      <text class="section-title">六、未成年人保护</text>
-      <text class="text">本小程序主要面向成年访客。如未成年人需要使用本服务，应在监护人指导下进行。</text>
+      <text class="section-title">六、您的权益</text>
+      <text class="text">关于您的个人信息，您享有以下权利：</text>
+      <view class="info-card">
+        <text class="info-item">• 查阅权：您有权查询您的个人信息</text>
+        <text class="info-item">• 复制权：您有权获取个人信息的副本</text>
+        <text class="info-item">• 更正权：您发现信息有误时，可要求更正</text>
+        <text class="info-item">• 删除权：访问结束后，您可申请删除个人信息</text>
+        <text class="info-item">• 撤回同意：您可通过停止使用本小程序撤回授权</text>
+        <text class="info-item">• 注销权：您可申请注销在小程序中的账号</text>
+      </view>
+      <text class="text warning">如您行使上述权利，请联系公司安保部门。我们将在十五个工作日内完成核查和处理。</text>
     </view>
     
     <view class="section">
-      <text class="section-title">七、隐私政策更新</text>
+      <text class="section-title">七、未成年人保护</text>
+      <text class="text">本小程序主要面向成年访客。若您是14周岁以下的未成年人，您需要和您的监护人共同仔细阅读本政策，并在征得监护人明示同意后继续使用本小程序服务。</text>
+      <text class="text">我们将根据相关法律法规的规定，处理经监护人同意而收集的未成年人用户信息。</text>
+    </view>
+    
+    <view class="section">
+      <text class="section-title">八、隐私政策更新</text>
       <text class="text">我们可能会适时修订本隐私政策。更新后的政策将在小程序内公布，继续使用本服务即视为接受更新后的政策。</text>
+      <text class="text highlight">更新日期：2026年04月15日</text>
+      <text class="text highlight">生效日期：2026年04月15日</text>
     </view>
     
     <view class="section">
-      <text class="section-title">八、联系我们</text>
-      <text class="text">如您对本隐私政策有任何疑问，请联系公司安保部门。</text>
-    </view>
-    
-    <view class="footer">
-      <text class="date">更新日期：2024年</text>
+      <text class="section-title">九、联系我们</text>
+      <text class="text">如您对本隐私政策有任何疑问、投诉建议，或未成年人个人信息保护相关问题，可通过以下方式联系我们：</text>
+      <view class="info-card contact">
+        <text class="info-item">联系部门：公司安保部门</text>
+        <text class="info-item">联系电话：0731-xxxxxxx（请填写实际电话）</text>
+        <text class="info-item">联系邮箱：xxxx@timehuasun.com（请填写实际邮箱）</text>
+      </view>
+      <text class="text">您也可向微信平台进行投诉。</text>
     </view>
   </scroll-view>
 </view>
