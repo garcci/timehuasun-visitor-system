@@ -1,16 +1,13 @@
 /* pages/agreement/agreement.wxss */
 page {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
   background: #f1f5f9;
 }
 
-.page {
-  flex: 1;
+.page-container {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .content-scroll {
