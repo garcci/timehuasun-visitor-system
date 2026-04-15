@@ -202,11 +202,11 @@ const DRAFT_KEY = 'visitor_draft'
 const AGREEMENT_KEY = 'visitor_agreement_signed'
 
 export function isAgreementSigned(): boolean {
-  return false // 每次填写前都要同意，不做缓存
+  return wx.getStorageSync(AGREEMENT_KEY) === true
 }
 
 export function signAgreement(): void {
-  // 每次填写前都要同意，不做缓存，因此不存储签署状态
+  wx.setStorageSync(AGREEMENT_KEY, true)
 }
 
 /**
