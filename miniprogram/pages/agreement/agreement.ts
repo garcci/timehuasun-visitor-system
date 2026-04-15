@@ -34,7 +34,7 @@ Page({
       
       if (count <= 0) {
         clearInterval(timer)
-        this.setData({ canSign: true, btnClass: '', btnText: '我已阅读，同意签署' })
+        this.setData({ canSign: true, btnClass: '', btnText: '同意签署' })
       }
     }, 1000)
   },
