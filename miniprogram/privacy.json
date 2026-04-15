@@ -16,5 +16,6 @@
       "key": "UserInfo",
       "desc": "用于访客申请提交和审批流程"
     }
-  ]
+  ],
+  "customPrivacyUrl": "/pages/privacy/privacy"
 }

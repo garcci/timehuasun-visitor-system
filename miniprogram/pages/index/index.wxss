@@ -70,3 +70,23 @@ page {
   flex-shrink: 0;
   margin-top: 2rpx;
 }
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32rpx;
+  padding: 16rpx 0;
+}
+
+.link {
+  font-size: 24rpx;
+  color: #1677ff;
+  padding: 8rpx 12rpx;
+}
+
+.divider {
+  font-size: 24rpx;
+  color: #d1d5db;
+  margin: 0 4rpx;
+}

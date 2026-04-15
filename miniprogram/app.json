@@ -4,7 +4,9 @@
     "pages/agreement/agreement",
     "pages/apply/apply",
     "pages/status/status",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/terms/terms",
+    "pages/privacy/privacy"
   ],
   "window": {
     "navigationBarTextStyle": "white",

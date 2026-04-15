@@ -22,5 +22,11 @@ Component({
     onHistory() {
       wx.navigateTo({ url: '/pages/history/history' })
     },
+    onTerms() {
+      wx.navigateTo({ url: '/pages/terms/terms' })
+    },
+    onPrivacy() {
+      wx.navigateTo({ url: '/pages/privacy/privacy' })
+    },
   },
 })
