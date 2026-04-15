@@ -77,108 +77,118 @@ Page({
     if (options?.from !== 'agreement') {
       console.log('redirect to agreement')
       wx.reLaunch({ url: '/pages/agreement/agreement' })
+      return
     }
+    // 只有从协议页面跳转过来才执行初始化
+    this.initPage()
   },
-  onShow() {
+
+  // 初始化页面
+  initPage() {
+    console.log('initPage')
     // 获取当前日期和时间
-      const now = new Date()
-      const year = now.getFullYear()
-      const month = String(now.getMonth() + 1).padStart(2, '0')
-      const day = String(now.getDate()).padStart(2, '0')
-      const hours = String(now.getHours()).padStart(2, '0')
-      const minutes = String(now.getMinutes()).padStart(2, '0')
-      
-      const currentDate = `${year}-${month}-${day}`
-      const currentTime = `${hours}:${minutes}`
-      
-      // 结束时间默认为当前时间 +2 小时
-      const endHours = String((parseInt(hours) + 2) % 24).padStart(2, '0')
-      const endTime = `${endHours}:${minutes}`
-      
-      this.setData({ 
-        today: getToday(),
-        'form.visitDate': currentDate,
-        'form.visitTime': currentTime,
-        'form.endDate': currentDate,
-        'form.endTime': endTime
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    const day = String(now.getDate()).padStart(2, '0')
+    const hours = String(now.getHours()).padStart(2, '0')
+    const minutes = String(now.getMinutes()).padStart(2, '0')
+    
+    const currentDate = `${year}-${month}-${day}`
+    const currentTime = `${hours}:${minutes}`
+    
+    // 结束时间默认为当前时间 +2 小时
+    const endHours = String((parseInt(hours) + 2) % 24).padStart(2, '0')
+    const endTime = `${endHours}:${minutes}`
+    
+    this.setData({ 
+      today: getToday(),
+      'form.visitDate': currentDate,
+      'form.visitTime': currentTime,
+      'form.endDate': currentDate,
+      'form.endTime': endTime
+    })
+    
+    // 检查是否有已提交的申请
+    const submittedApps = getApplications()
+    const hasSubmitted = submittedApps.length > 0
+    
+    // 尝试加载草稿
+    const draft = getDraft()
+    
+    if (draft) {
+      // ✅ 有草稿，恢复草稿（保留来访时间）
+      console.log('检测到草稿，恢复草稿')
+      const { companions, visitDate, visitTime, endDate, endTime: draftEndTime, ...formFields } = draft
+      this.setData({
+        form: { ...this.data.form, ...(formFields as Partial<FormData>) },
+        companions: companions || []
       })
       
-      // 检查是否有已提交的申请
-      const submittedApps = getApplications()
-      const hasSubmitted = submittedApps.length > 0
-      
-      // 尝试加载草稿
-      const draft = getDraft()
-      
-      if (draft) {
-        // ✅ 有草稿，恢复草稿（保留来访时间）
-        console.log('检测到草稿，恢复草稿')
-        const { companions, visitDate, visitTime, endDate, endTime: draftEndTime, ...formFields } = draft
-        this.setData({
-          form: { ...this.data.form, ...(formFields as Partial<FormData>) },
-          companions: companions || []
-        })
-        
-        // ✅ 如果被访人手机号符合格式，自动校验
-        const hostPhone = formFields.hostPhone as string
-        if (hostPhone && /^1[3-9]\d{9}$/.test(hostPhone)) {
-          console.log('📱 草稿中的被访人手机号符合格式，自动校验:', hostPhone)
-          // 延迟执行，确保 setData 完成
-          setTimeout(() => {
-            this.validateHostPhone(hostPhone)
-          }, 500)
-        }
-      } else if (hasSubmitted) {
-        // ✅ 没有草稿但有已提交的申请，清空表单
-        console.log('检测到已提交的申请且无草稿，清空表单')
-        this.setData({
-          form: {
-            name: '',
-            phone: '',
-            idType: '居民身份证',
-            idCard: '',
-            organization: '',
-            plateNumber: '',
-            hostName: '',
-            hostPhone: '',
-            hostLoginName: '',
-            visitDate: currentDate,
-            visitTime: currentTime,
-            endDate: currentDate,
-            endTime: endTime,
-            purpose: '',
-            remark: '',
-          },
-          companions: [],
-          newCompanion: {name: '', idCard: '', phone: ''},
-          hostValidateSuccess: false,
-          validatingHost: false,
-          errors: {}
-        })
+      // ✅ 如果被访人手机号符合格式，自动校验
+      const hostPhone = formFields.hostPhone as string
+      if (hostPhone && /^1[3-9]\d{9}$/.test(hostPhone)) {
+        console.log('📱 草稿中的被访人手机号符合格式，自动校验:', hostPhone)
+        // 延迟执行，确保 setData 完成
+        setTimeout(() => {
+          this.validateHostPhone(hostPhone)
+        }, 500)
       }
-      // 如果既没有草稿也没有已提交的申请，保持默认值
-      
-      // 加载历史输入记录
-      this.loadHistory()
-      // 加载常用被访人
-      this.loadFrequentHosts()
-      // 加载常用单位
-      this.loadOrgHistory()
-      // 加载常用随行人员
-      this.loadCompanionHistory()
-      // 加载上次申请记录
-      this.loadLastApplication()
-      // 计算进度
-      this.calculateProgress()
-    },
+    } else if (hasSubmitted) {
+      // ✅ 没有草稿但有已提交的申请，清空表单
+      console.log('检测到已提交的申请且无草稿，清空表单')
+      this.setData({
+        form: {
+          name: '',
+          phone: '',
+          idType: '居民身份证',
+          idCard: '',
+          organization: '',
+          plateNumber: '',
+          hostName: '',
+          hostPhone: '',
+          hostLoginName: '',
+          visitDate: currentDate,
+          visitTime: currentTime,
+          endDate: currentDate,
+          endTime: endTime,
+          purpose: '',
+          remark: '',
+        },
+        companions: [],
+        newCompanion: {name: '', idCard: '', phone: ''},
+        hostValidateSuccess: false,
+        validatingHost: false,
+        errors: {}
+      })
+    }
+    // 如果既没有草稿也没有已提交的申请，保持默认值
+    
+    // 加载历史输入记录
+    this.loadHistory()
+    // 加载常用被访人
+    this.loadFrequentHosts()
+    // 加载常用单位
+    this.loadOrgHistory()
+    // 加载常用随行人员
+    this.loadCompanionHistory()
+    // 加载上次申请记录
+    this.loadLastApplication()
+    // 计算进度
+    this.calculateProgress()
+  },
 
-    onHide() {
-      // 页面隐藏时，如果有未保存的内容，自动保存草稿
-      const hasContent = Object.values(this.data.form).some(v => v && v.toString().trim())
-      if (hasContent && !this.data.isSubmitting) {
-        this.autoSaveDraft()
-      }
-    },
+  onShow() {
+    console.log('apply onShow')
+  },
+
+  onHide() {
+    // 页面隐藏时，如果有未保存的内容，自动保存草稿
+    const hasContent = Object.values(this.data.form).some(v => v && v.toString().trim())
+    if (hasContent && !this.data.isSubmitting) {
+      this.autoSaveDraft()
+    }
+  },
 
   // 加载历史输入记录
   loadHistory() {
