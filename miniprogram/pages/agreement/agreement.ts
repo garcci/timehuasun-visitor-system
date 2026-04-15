@@ -59,13 +59,26 @@ Component({
       })
     },
     onViewPrivacy() {
+      this.setData({ agreedPrivacy: true })
+      this.updateCanSignAll()
       wx.navigateTo({ url: '/pages/privacy/privacy' })
     },
     onViewTerms() {
+      this.setData({ agreedTerms: true })
+      this.updateCanSignAll()
       wx.navigateTo({ url: '/pages/terms/terms' })
     },
     onSign() {
-      if (!this.data.canSignAll) return
+      if (!this.data.canSignAll) {
+        if (!this.data.canSign) {
+          wx.showToast({ title: '请阅读完协议', icon: 'none' })
+        } else if (!this.data.agreedPrivacy) {
+          wx.showToast({ title: '请同意隐私政策', icon: 'none' })
+        } else if (!this.data.agreedTerms) {
+          wx.showToast({ title: '请同意用户协议', icon: 'none' })
+        }
+        return
+      }
       signAgreement()
       this.setData({ signed: true })
       wx.showToast({ title: '签署成功', icon: 'success', duration: 1200 })

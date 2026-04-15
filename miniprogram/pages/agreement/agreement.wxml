@@ -107,11 +107,12 @@
     <button
       class="btn-sign {{canSignAll ? '' : 'btn-sign-disabled'}} {{signed ? 'btn-signed' : ''}}"
       bindtap="onSign"
-      disabled="{{!canSignAll || signed}}"
     >
       <text wx:if="{{signed}}">✓ 已签署</text>
       <text wx:elif="{{canSignAll}}">我已阅读，同意签署</text>
-      <text wx:else>请阅读协议（{{countdown}}s）</text>
+      <text wx:elif="{{!canSign}}">请阅读协议（{{countdown}}s）</text>
+      <text wx:elif="{{!agreedPrivacy}}">请同意隐私政策</text>
+      <text wx:else>请同意用户协议</text>
     </button>
   </view>
 </view>
