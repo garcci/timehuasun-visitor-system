@@ -21,7 +21,7 @@ interface FormData {
   remark: string
 }
 
-Component({
+Page({
   data: {
     today: '',
     idTypeOptions: ID_TYPES,
@@ -70,18 +70,15 @@ Component({
     lastApplication: null as any, // 上次申请记录
     companionHistory: [] as Array<{name: string, idCard: string, phone?: string}>, // 常用随行人员
   },
-  pageLifetimes: {
-    show() {
-      // 每次都要签署保密协议（通过页面参数控制）
-      const pages = getCurrentPages()
-      const page = pages[pages.length - 1]
-      const fromAgreement = (page as any).options?.from === 'agreement'
-      if (!fromAgreement) {
-        wx.redirectTo({ url: '/pages/agreement/agreement' })
-        return
-      }
-      
-      // 获取当前日期和时间
+
+  onLoad(options: any) {
+    // 每次都要签署保密协议（通过页面参数控制）
+    if (options?.from !== 'agreement') {
+      wx.redirectTo({ url: '/pages/agreement/agreement' })
+    }
+  },
+  onShow() {
+    // 获取当前日期和时间
       const now = new Date()
       const year = now.getFullYear()
       const month = String(now.getMonth() + 1).padStart(2, '0')
@@ -172,17 +169,17 @@ Component({
       // 计算进度
       this.calculateProgress()
     },
-    hide() {
+
+    onHide() {
       // 页面隐藏时，如果有未保存的内容，自动保存草稿
       const hasContent = Object.values(this.data.form).some(v => v && v.toString().trim())
       if (hasContent && !this.data.isSubmitting) {
         this.autoSaveDraft()
       }
     },
-  },
-  methods: {
-    // 加载历史输入记录
-    loadHistory() {
+
+  // 加载历史输入记录
+  loadHistory() {
       try {
         const phoneHistory = wx.getStorageSync('phone_history') || []
         const idCardHistory = wx.getStorageSync('idcard_history') || []
@@ -1169,5 +1166,4 @@ Component({
         })
       })
     },
-  },
-})
+  })
