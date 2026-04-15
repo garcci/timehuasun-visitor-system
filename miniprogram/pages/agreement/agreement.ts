@@ -20,6 +20,13 @@ Component({
   },
   pageLifetimes: {
     show() {
+      // 检查是否已签署过协议
+      const { isAgreementSigned } = require('../../utils/api')
+      if (isAgreementSigned()) {
+        // 已签署，直接跳转到申请页面
+        wx.redirectTo({ url: '/pages/apply/apply' })
+        return
+      }
       this.startCountdown()
     },
     hide() {
