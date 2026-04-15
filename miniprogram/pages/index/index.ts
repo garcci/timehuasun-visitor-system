@@ -1,5 +1,5 @@
 // pages/index/index.ts
-import { isPrivacyAgreed, getApplications } from '../../utils/api'
+import { getApplications } from '../../utils/api'
 
 Page({
   data: {
@@ -13,8 +13,8 @@ Page({
   },
 
   onApply() {
-    console.log('onApply clicked, isPrivacyAgreed:', isPrivacyAgreed())
-    // 隐私政策已同意则直接跳转申请页面（保密协议在申请页面签署）
+    console.log('onApply clicked')
+    // 直接跳转申请页面，保密协议在申请页面检查
     wx.navigateTo({ url: '/pages/apply/apply' })
   },
 

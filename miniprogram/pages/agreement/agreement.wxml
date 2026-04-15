@@ -75,27 +75,6 @@
         <text class="sign-title">签署确认</text>
         <text class="sign-text">本人已认真阅读上述告知书全部内容，理解并同意遵守以上所有条款。</text>
       </view>
-      
-      <view class="agreement-checks">
-        <view class="check-item">
-          <checkbox-group bindchange="onPrivacyCheck">
-            <label class="check-label">
-              <checkbox checked="{{agreedPrivacy}}" />
-              <text class="check-text">我已阅读并同意</text>
-              <text class="check-link" bindtap="onViewPrivacy">《隐私政策》</text>
-            </label>
-          </checkbox-group>
-        </view>
-        <view class="check-item">
-          <checkbox-group bindchange="onTermsCheck">
-            <label class="check-label">
-              <checkbox checked="{{agreedTerms}}" />
-              <text class="check-text">我已阅读并同意</text>
-              <text class="check-link" bindtap="onViewTerms">《用户服务协议》</text>
-            </label>
-          </checkbox-group>
-        </view>
-      </view>
     </view>
   </scroll-view>
 

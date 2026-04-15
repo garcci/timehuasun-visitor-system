@@ -1,5 +1,5 @@
 // pages/apply/apply.ts
-import { getDraft, saveDraft, getToday, submitApplicationApi, API_BASE_URL, getApplications, isPrivacyAgreed } from '../../utils/api'
+import { getDraft, saveDraft, getToday, submitApplicationApi, API_BASE_URL, getApplications } from '../../utils/api'
 
 const ID_TYPES = ['居民身份证', '护照', '港澳通行证', '台湾通行证', '其他']
 
@@ -72,12 +72,6 @@ Component({
   },
   pageLifetimes: {
     show() {
-      // 检查是否已同意隐私政策
-      if (!isPrivacyAgreed()) {
-        wx.redirectTo({ url: '/pages/agreement/agreement' })
-        return
-      }
-      
       // 每次都要签署保密协议（通过页面参数控制）
       const pages = getCurrentPages()
       const page = pages[pages.length - 1]

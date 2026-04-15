@@ -112,5 +112,10 @@
       </view>
       <text class="text">您也可向微信平台进行投诉。</text>
     </view>
+    
+    <!-- 同意按钮 -->
+    <view class="agree-section">
+      <button class="btn-agree" bindtap="onAgree">我已阅读并同意</button>
+    </view>
   </scroll-view>
 </view>
