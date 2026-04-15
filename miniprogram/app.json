@@ -20,33 +20,9 @@
   "lazyCodeLoading": "requiredComponents",
   "__usePrivacyCheck__": true,
   "requiredBackgroundModes": [],
-  "optimization": {
-    "subPackages": true
-  },
-  "preloadRule": {
-    "pages/index/index": {
-      "network": "all",
-      "packages": ["pages/apply/apply"]
-    }
-  },
   "permission": {
     "scope.userLocation": {
       "desc": "用于获取位置信息"
     }
-  },
-  "miniprogramRoot": "miniprogram/",
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "minified": true,
-    "uglifyFileName": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "condition": false
   }
 }
