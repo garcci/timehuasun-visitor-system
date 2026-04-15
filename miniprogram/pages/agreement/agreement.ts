@@ -17,14 +17,21 @@ Page({
   },
 
   onLoad() {
+    // 页面加载时不跳转，避免白屏
+  },
+
+  onShow() {
+    // 页面显示时检查，已签署则跳转
     if (isAgreementSigned()) {
       wx.reLaunch({ url: '/pages/apply/apply' })
     }
   },
 
   onReady() {
-    if (isAgreementSigned()) return
-    this.startCountdown()
+    // 未签署才启动倒计时
+    if (!isAgreementSigned()) {
+      this.startCountdown()
+    }
   },
 
   startCountdown() {
