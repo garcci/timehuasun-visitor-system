@@ -69,6 +69,7 @@ Page({
     orgHistory: [] as string[], // 常用单位历史
     lastApplication: null as any, // 上次申请记录
     companionHistory: [] as Array<{name: string, idCard: string, phone?: string}>, // 常用随行人员
+    showCompanionForm: false, // 是否显示随行人员添加表单
   },
 
   onLoad(options: any) {
@@ -980,6 +981,12 @@ Page({
       this.autoSaveDraft()
       wx.showToast({ title: '添加成功', icon: 'success' })
     },
+
+    // 切换随行人员表单显示/隐藏
+    toggleCompanionForm() {
+      this.setData({ showCompanionForm: !this.data.showCompanionForm })
+    },
+
     removeCompanion(e: any) {
       const index = e.currentTarget.dataset.index as number
       const companions = [...this.data.companions]

@@ -143,11 +143,21 @@
         </view>
       </view>
 
-      <!-- 添加新随行人员 -->
-      <view class="companion-add-section">
+      <!-- 添加随行人员按钮（收起状态） -->
+      <view wx:if="{{!showCompanionForm}}" class="add-companion-trigger" bindtap="toggleCompanionForm">
+        <view class="add-companion-trigger-content">
+          <text class="add-icon">+</text>
+          <text class="add-text">添加随行人员</text>
+        </view>
+        <text class="add-arrow">›</text>
+      </view>
+
+      <!-- 添加新随行人员表单（展开状态） -->
+      <view wx:if="{{showCompanionForm}}" class="companion-add-section">
         <view class="section-title">
           <text class="title-icon">+</text>
           <text>添加随行人员</text>
+          <text class="close-icon" bindtap="toggleCompanionForm">✕</text>
         </view>
         
         <!-- 常用随行人员 -->
