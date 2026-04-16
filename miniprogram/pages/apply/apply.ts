@@ -973,7 +973,8 @@ Page({
       const companions = [...this.data.companions, { name: name.trim(), idCard: idCard.trim(), phone: phone.trim() }]
       this.setData({
         companions,
-        newCompanion: { name: '', idCard: '', phone: '' }
+        newCompanion: { name: '', idCard: '', phone: '' },
+        showCompanionForm: false
       })
       // 保存到历史
       this.saveCompanionHistory({ name: name.trim(), idCard: idCard.trim(), phone: phone.trim() })
