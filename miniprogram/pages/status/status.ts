@@ -1,5 +1,5 @@
 // pages/status/status.ts
-import { getApplicationByIdApi, mockUpdateStatus, formatDateTime, formatSubmitTime } from '../../utils/api'
+import { getApplicationByIdApi, mockUpdateStatus, formatSubmitTime, formatVisitTime, formatEndTime } from '../../utils/api'
 import { maskIdCard, maskPhone, maskName } from '../../utils/mask'
 import type { Application } from '../../utils/api'
 
@@ -67,46 +67,10 @@ Component({
         }
         
         // 格式化来访时间
-        let visitTime = ''
-        if (app.visitDate && app.visitTime) {
-          // 从 visitDate 中提取日期部分，并转换时区
-          let datePart = app.visitDate
-          if (app.visitDate.includes('T')) {
-            // ISO 格式，需要转换时区
-            const utcDate = new Date(app.visitDate)
-            // 转换为本地时区（中国时区 UTC+8）
-            const year = utcDate.getFullYear()
-            const month = String(utcDate.getMonth() + 1).padStart(2, '0')
-            const day = String(utcDate.getDate()).padStart(2, '0')
-            datePart = `${year}-${month}-${day}`
-          }
-          // 从 visitTime 中提取时间部分（HH:mm）
-          const timePart = app.visitTime.substring(0, 5)
-          visitTime = `${datePart} ${timePart}`
-        } else if (app.visitStartDate || app.visitStartTime) {
-          visitTime = formatDateTime(app.visitStartDate, app.visitStartTime)
-        }
+        const visitTime = formatVisitTime(app)
         
         // 格式化结束时间
-        let endTime = ''
-        if (app.endDate && app.endTime) {
-          // 从 endDate 中提取日期部分，并转换时区
-          let datePart = app.endDate
-          if (app.endDate.includes('T')) {
-            // ISO 格式，需要转换时区
-            const utcDate = new Date(app.endDate)
-            // 转换为本地时区（中国时区 UTC+8）
-            const year = utcDate.getFullYear()
-            const month = String(utcDate.getMonth() + 1).padStart(2, '0')
-            const day = String(utcDate.getDate()).padStart(2, '0')
-            datePart = `${year}-${month}-${day}`
-          }
-          // 从 endTime 中提取时间部分（HH:mm）
-          const timePart = app.endTime.substring(0, 5)
-          endTime = `${datePart} ${timePart}`
-        } else if (app.visitStartDate || app.visitStartTime) {
-          endTime = formatDateTime(app.visitStartDate, app.visitStartTime)
-        }
+        const endTime = formatEndTime(app)
         
         // 格式化提交时间
         const submitTimeFormatted = formatSubmitTime(app.submitTime)
@@ -142,9 +106,14 @@ Component({
           () => {
             if (app.status === 'approved') {
               wx.nextTick(() => this.drawQRCode())
-              // 启动倒计时
-              if (app.visitDate && app.visitTime) {
-                this.startCountdown(app.visitDate, app.visitTime)
+              // 启动倒计时 - 使用格式化后的日期时间，避免时区问题
+              // ⚠️ 关键修复：使用已格式化的 visitTime 和 endTime，而非原始字段
+              if (this.data.visitTime && this.data.endTime) {
+                // visitTime 和 endTime 已经是 "YYYY-MM-DD HH:mm" 格式
+                const parts = this.data.visitTime.split(' ')
+                const dateStr = parts[0] || ''
+                const timeStr = parts[1] || '00:00'
+                this.startCountdown(dateStr, timeStr)
               }
             }
           }
@@ -219,53 +188,67 @@ Component({
       if (this.data.countdownTimer) {
         clearInterval(this.data.countdownTimer)
       }
-      
+          
       // 处理日期格式
       let dateStr = visitDate
       let timeStr = visitTime || '00:00'
-      
+          
       // 如果日期包含 T，提取日期部分
       if (dateStr && dateStr.includes('T')) {
         dateStr = dateStr.split('T')[0]
+      } else if (dateStr && dateStr.includes(' ')) {
+        // 处理 "YYYY-MM-DD HH:mm:ss" 等空格分隔的日期格式
+        dateStr = dateStr.split(' ')[0]
       }
-      
-      // 如果时间包含秒，去掉秒
-      if (timeStr && timeStr.length > 5) {
+          
+      // 处理 ISO 8601 时间格式: "1970-01-01T10:00:00.000Z"
+      if (timeStr && timeStr.includes('T')) {
+        timeStr = timeStr.split('T')[1].substring(0, 5)
+      } else if (timeStr && timeStr.length > 5) {
+        // 如果时间包含秒，去掉秒
         timeStr = timeStr.substring(0, 5)
       }
-      
+          
       console.log('⏰ 启动倒计时:', { dateStr, timeStr })
-      
+          
       if (!dateStr || !timeStr) {
-        console.log('⚠️ 日期或时间为空，不启动倒计时')
+        console.log('日期或时间为空，不启动倒计时')
         return
       }
-      
-      const targetTime = new Date(`${dateStr}T${timeStr}`).getTime()
-      
+          
+      // ⚠️ 关键修复：使用本地时间构造 Date 对象，getTime() 自动转换为 UTC 时间戳
+      // 避免 Date.UTC() 将本地时间参数误当 UTC 时间处理，导致时区偏差
+      const [year, month, day] = dateStr.split('-').map(Number)
+      const [hours, minutes] = timeStr.split(':').map(Number)
+          
+      // 使用本地时间参数构造 Date 对象（对应用户选择的本地时间）
+      // getTime() 返回正确的 UTC 时间戳，可与 Date.now() 直接比较
+      const targetTimestamp = new Date(year, month - 1, day, hours, minutes, 0).getTime()
+          
+      console.log('⏰ 目标时间戳:', targetTimestamp)
+      console.log('⏰ 目标时间:', new Date(targetTimestamp).toLocaleString('zh-CN'))
+          
       // 检查日期是否有效
-      if (isNaN(targetTime)) {
-        console.log('⚠️ 无效的日期格式:', { dateStr, timeStr })
+      if (isNaN(targetTimestamp)) {
+        console.log('无效的日期格式:', { dateStr, timeStr })
         this.setData({ countdown: '' })
         return
       }
-      
+          
       const updateCountdown = () => {
-        const now = new Date().getTime()
-        const diff = targetTime - now
-        
-        console.log('⏰ 倒计时更新:', { targetTime, now, diff })
-        
+        const now = Date.now()
+        const diff = targetTimestamp - now
+            
         if (diff <= 0) {
           this.setData({ countdown: '已过期' })
           clearInterval(this.data.countdownTimer)
           return
         }
-        
+            
         const days = Math.floor(diff / (1000 * 60 * 60 * 24))
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-        
+            
         let countdownText = ''
         if (days > 0) {
           countdownText = `${days}天${hours}小时`
@@ -274,11 +257,10 @@ Component({
         } else {
           countdownText = `${minutes}分钟后`
         }
-        
-        console.log('⏰ 倒计时文本:', countdownText)
+            
         this.setData({ countdown: countdownText })
       }
-      
+          
       updateCountdown()
       const timer = setInterval(updateCountdown, 60000) // 每分钟更新一次
       this.setData({ countdownTimer: timer })

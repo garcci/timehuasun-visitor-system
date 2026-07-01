@@ -399,8 +399,16 @@ export function getToday(): string {
 
 export function formatDateTime(date: string | undefined, time: string | undefined): string {
   if (!date || !time) return ''
-  // 如果 time 已经包含日期部分，只取时间
-  const timePart = time.includes('T') ? time.split('T')[1].substring(0, 5) : time.substring(0, 5)
+  let timePart = time
+  // 处理 ISO 8601 格式: "1970-01-01T10:00:00.000Z"
+  if (time.includes('T')) {
+    timePart = time.split('T')[1].substring(0, 5)
+  } else if (time.includes(' ')) {
+    // 处理 "YYYY-MM-DD HH:mm:ss" 格式
+    timePart = time.split(' ')[1].substring(0, 5)
+  } else {
+    timePart = time.substring(0, 5)
+  }
   return `${date} ${timePart}`
 }
 
@@ -420,31 +428,50 @@ export function formatSubmitTime(isoString: string): string {
 
 /**
  * 格式化来访时间
+ * ️ 关键修复：增强容错性，处理后端可能返回的各种异常格式
  */
 export function formatVisitTime(app: Application): string {
   // 优先使用 visitDate/visitTime，否则使用 visitStartDate/visitStartTime
   if (app.visitDate) {
     if (app.visitTime && app.visitTime.trim()) {
-      // 从 visitDate 中提取日期部分，并转换时区
+      // 从 visitDate 中提取日期部分
       let datePart = app.visitDate
-      if (app.visitDate.includes('T')) {
-        // ISO 格式，需要转换时区
-        const utcDate = new Date(app.visitDate)
-        const year = utcDate.getFullYear()
-        const month = String(utcDate.getMonth() + 1).padStart(2, '0')
-        const day = String(utcDate.getDate()).padStart(2, '0')
+      
+      // 处理 ISO 8601 格式: "2026-07-02T00:00:00.000Z" 或 "2026-07-02 00:00:00"
+      // ⚠️ 关键修复：使用本地时间方法，避免 UTC 转换导致日期减一
+      if (app.visitDate.includes('T') || app.visitDate.includes(' ')) {
+        const dateObj = new Date(app.visitDate)
+        const year = dateObj.getFullYear()
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+        const day = String(dateObj.getDate()).padStart(2, '0')
         datePart = `${year}-${month}-${day}`
       }
+      
       // 从 visitTime 中提取时间部分（HH:mm）
-      const timePart = app.visitTime.substring(0, 5)
+      let timePart = app.visitTime
+      
+      // 处理 ISO 8601 时间格式: "1970-01-01T10:00:00.000Z"
+      if (timePart.includes('T')) {
+        // 提取 T 后面的时间部分
+        timePart = timePart.split('T')[1].substring(0, 5)
+      } else if (timePart.includes(' ')) {
+        // 处理 "YYYY-MM-DD HH:mm:ss" 格式，提取时间部分
+        timePart = timePart.split(' ')[1].substring(0, 5)
+      } else if (timePart.length > 5) {
+        // 如果包含秒，去掉秒部分 "HH:mm:ss" -> "HH:mm"
+        timePart = timePart.substring(0, 5)
+      }
+      
       return `${datePart} ${timePart}`
     }
+    
     // 如果只有 visitDate，提取日期部分
-    if (app.visitDate.includes('T')) {
-      const utcDate = new Date(app.visitDate)
-      const year = utcDate.getFullYear()
-      const month = String(utcDate.getMonth() + 1).padStart(2, '0')
-      const day = String(utcDate.getDate()).padStart(2, '0')
+    // ⚠️ 关键修复：使用本地时间方法，避免 UTC 转换导致日期减一
+    if (app.visitDate.includes('T') || app.visitDate.includes(' ')) {
+      const dateObj = new Date(app.visitDate)
+      const year = dateObj.getFullYear()
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+      const day = String(dateObj.getDate()).padStart(2, '0')
       return `${year}-${month}-${day}`
     }
     return app.visitDate
@@ -454,22 +481,31 @@ export function formatVisitTime(app: Application): string {
 
 /**
  * 格式化结束时间
+ * ⚠️ 关键修复：增强容错性，处理后端可能返回的各种异常格式
  */
 export function formatEndTime(app: Application): string {
   // 优先使用 endDate/endTime，否则使用开始时间加 2 小时
   if (app.endDate && app.endTime) {
-    // 从 endDate 中提取日期部分，并转换时区
+    // 从 endDate 中提取日期部分
     let datePart = app.endDate
-    if (app.endDate.includes('T')) {
-      // ISO 格式，需要转换时区
-      const utcDate = new Date(app.endDate)
-      const year = utcDate.getFullYear()
-      const month = String(utcDate.getMonth() + 1).padStart(2, '0')
-      const day = String(utcDate.getDate()).padStart(2, '0')
+    if (app.endDate.includes('T') || app.endDate.includes(' ')) {
+      // ⚠️ 关键修复：使用本地时间方法，避免 UTC 转换导致日期减一
+      const dateObj = new Date(app.endDate)
+      const year = dateObj.getFullYear()
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+      const day = String(dateObj.getDate()).padStart(2, '0')
       datePart = `${year}-${month}-${day}`
     }
+    
     // 从 endTime 中提取时间部分（HH:mm）
-    const timePart = app.endTime.substring(0, 5)
+    let timePart = app.endTime
+    if (app.endTime.includes('T')) {
+      timePart = app.endTime.split('T')[1].substring(0, 5)
+    } else if (app.endTime.includes(' ')) {
+      timePart = app.endTime.split(' ')[1].substring(0, 5)
+    } else if (timePart.length > 5) {
+      timePart = timePart.substring(0, 5)
+    }
     return `${datePart} ${timePart}`
   }
   
@@ -482,16 +518,25 @@ export function formatEndTime(app: Application): string {
     return ''
   }
   
-  const [hours, minutes] = startTime.split(':').map(Number)
+  let timePart = startTime
+  if (startTime.includes('T')) {
+    timePart = startTime.split('T')[1].substring(0, 5)
+  } else if (startTime.includes(' ')) {
+    timePart = startTime.split(' ')[1].substring(0, 5)
+  } else if (timePart.length > 5) {
+    timePart = timePart.substring(0, 5)
+  }
+  const [hours, minutes] = timePart.split(':').map(Number)
   const endHours = String((hours + 2) % 24).padStart(2, '0')
   
-  // 处理 startDate 可能是 ISO 格式，并转换时区
+  // 处理 startDate 可能是 ISO 格式
+  // ⚠️ 关键修复：使用本地时间方法，避免 UTC 转换导致日期减一
   let datePart = startDate
-  if (startDate && startDate.includes('T')) {
-    const utcDate = new Date(startDate)
-    const year = utcDate.getFullYear()
-    const month = String(utcDate.getMonth() + 1).padStart(2, '0')
-    const day = String(utcDate.getDate()).padStart(2, '0')
+  if (startDate && (startDate.includes('T') || startDate.includes(' '))) {
+    const dateObj = new Date(startDate)
+    const year = dateObj.getFullYear()
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0')
+    const day = String(dateObj.getDate()).padStart(2, '0')
     datePart = `${year}-${month}-${day}`
   }
   return `${datePart} ${endHours}:${String(minutes).padStart(2, '0')}`

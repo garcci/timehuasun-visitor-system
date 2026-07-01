@@ -555,6 +555,14 @@ page {
   line-height: 1.5;
 }
 
+.field-hint-sub {
+  font-size: 22rpx;
+  color: #b0b7c0;
+  padding: 4rpx 0 0;
+  display: block;
+  line-height: 1.5;
+}
+
 /* 历史记录选择器 */
 .history-picker {
   position: absolute;

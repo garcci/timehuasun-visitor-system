@@ -112,11 +112,12 @@
       <view class="field last">
         <text class="field-lbl">车牌号码</text>
         <view class="input-with-clear">
-          <input class="field-inp" type="text" placeholder="请输入车牌号码（选填）" placeholder-class="inp-ph"
-            value="{{form.plateNumber}}" data-field="plateNumber" bindinput="onPlateInput" maxlength="8" confirm-type="done" />
+          <input class="field-inp" type="text" placeholder="请输入车牌号码（选填），可输入多个" placeholder-class="inp-ph"
+            value="{{form.plateNumber}}" data-field="plateNumber" bindinput="onPlateInput" confirm-type="done" />
           <text wx:if="{{form.plateNumber}}" class="clear-btn" data-field="plateNumber" catchtap="clearField">✕</text>
         </view>
-        <text class="field-hint">示例：京A88888</text>
+        <text class="field-hint">多个车牌可用逗号、空格或换行分隔</text>
+        <text class="field-hint-sub">示例：京A88888, 沪B99999</text>
       </view>
     </view>
 
